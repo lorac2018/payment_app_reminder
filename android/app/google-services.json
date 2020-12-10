@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "56452829669",
+    "firebase_url": "https://paymentreminderapp2-default-rtdb.firebaseio.com",
+    "project_id": "paymentreminderapp2",
+    "storage_bucket": "paymentreminderapp2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:56452829669:android:67a78c5d47cffddc54df0c",
+        "android_client_info": {
+          "package_name": "com.example.flutter_reminder_payment"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "56452829669-eimrmie4mkn8cvke0thpf6bjjha6kln7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.flutter_reminder_payment",
+            "certificate_hash": "e49d7953be00a5d5756f201a647901764e8b06d1"
+          }
+        },
+        {
+          "client_id": "56452829669-ijfa1fp8ut9m9ja4e2fm37ulpmc8iqdj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB31wbHFb9GZlvfTWZhQNAF8ECffGe-CL4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "56452829669-ijfa1fp8ut9m9ja4e2fm37ulpmc8iqdj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
