@@ -1,8 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_reminder_payment/screens/auth_screen.dart';
-import 'package:flutter_reminder_payment/widgets/authservice.dart';
+import './screens/auth_screen.dart';
 import 'package:provider/provider.dart';
 import './screens/add_payment_screen.dart';
 import './screens/edit_payment_screen.dart';
@@ -28,17 +27,16 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'App Reminder Payment',
         theme: ThemeData(
-          //(56,90,124)
-          //scaffoldBackgroundColor: Color.fromRGBO(56, 90, 124, 1),
-          primaryColor: Color.fromRGBO(56, 90, 124, 1),
-          buttonColor: Color.fromRGBO(95, 122, 150, 1),
-          highlightColor: Colors.white,
-          //(199,196,184)
-          backgroundColor: Color.fromRGBO(22, 36, 49, 1),
-          accentColor: Color.fromRGBO(28, 45, 62, 1),
-          errorColor: Colors.red,
-          fontFamily: 'Quicksand',
-        ),
+            //(56,90,124)
+            //scaffoldBackgroundColor: Color.fromRGBO(56, 90, 124, 1),
+            primaryColor: Color.fromRGBO(56, 90, 124, 1),
+            buttonColor: Color.fromRGBO(95, 122, 150, 1),
+            highlightColor: Colors.white,
+            //(199,196,184)
+            backgroundColor: Color.fromRGBO(22, 36, 49, 1),
+            accentColor: Color.fromRGBO(28, 45, 62, 1),
+            errorColor: Colors.red,
+            fontFamily: 'Quicksand'),
         home: StreamBuilder(
             stream: FirebaseAuth.instance.authStateChanges(),
             builder: (ctx, userSnapshot) {
@@ -47,7 +45,6 @@ class MyApp extends StatelessWidget {
               }
               return AuthScreen();
             }),
-        //},
         routes: {
           //HomePage.routeName: (ctx) => HomePage(),
           PaymentDetailScreen.routeName: (ctx) => PaymentDetailScreen(),

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_reminder_payment/screens/payment_overview_screen.dart';
 import '../screens/add_payment_screen.dart';
 import '../models/payments.dart';
 import '../screens/payments_screen.dart';
 import '../widgets/drawer.dart';
-import '../widgets/notifications.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
@@ -64,8 +62,8 @@ class _HomePageState extends State<HomePage> {
           IconButton(
               icon: Icon(Icons.notifications),
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Notifications()));
+                // Navigator.push(context,
+                //     MaterialPageRoute(builder: (context) => Notifications()));
               }),
         ],
       ),
@@ -78,14 +76,8 @@ class _HomePageState extends State<HomePage> {
         type: BottomNavigationBarType.fixed,
         backgroundColor: Theme.of(context).primaryColor,
         items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            title: Text('Home'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.history),
-            title: Text('History'),
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'home'),
+          BottomNavigationBarItem(icon: Icon(Icons.history), label: 'history'),
         ],
       ),
     );

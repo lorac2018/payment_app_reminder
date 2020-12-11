@@ -23,7 +23,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
           //value: payments.notification,
           onChanged: (value) {
             setState(() {
-            //  payments.notification = value;
+              //  payments.notification = value;
             });
           },
         ),

@@ -29,8 +29,8 @@ class _NewPaymentScreenState extends State<NewPaymentScreen> {
     namePayment: '',
     amount: 0,
     date: null,
-    autopaid: null,
-    notification: null,
+    autopaid: false,
+    notification: false,
   );
   var _initValues = {
     'namePayment': '',
@@ -40,7 +40,6 @@ class _NewPaymentScreenState extends State<NewPaymentScreen> {
     'notification': '',
   };
   var _isInit = true;
-  var _isLoading = false;
 
   _NewPaymentScreenState();
 
@@ -78,7 +77,7 @@ class _NewPaymentScreenState extends State<NewPaymentScreen> {
     super.dispose();
   }
 
-  DateTime _presentDatePicker() {
+  void _presentDatePicker() {
     showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -95,7 +94,7 @@ class _NewPaymentScreenState extends State<NewPaymentScreen> {
   }
 
   Future<void> _submitData() async {
-   //_data.currentState.validate();
+    //_data.currentState.validate();
     _data.currentState.save();
 
     try {
@@ -104,254 +103,215 @@ class _NewPaymentScreenState extends State<NewPaymentScreen> {
       print(_addPayment.namePayment);
       print(_addPayment.date);
       print(_addPayment.amount);
+      print(_addPayment.id.toString());
     } catch (error) {
       await showDialog(
-        context: context,
-        builder: (ctx) => AlertDialog(
-          title: Text('An error occurred!'),
-          content: Text('Something went wrong.'),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('Okay'),
-              onPressed: () {
-                Navigator.of(ctx).pop();
-              },
-            )
-          ],
-        ),
-      );
+          context: context,
+          builder: (ctx) => AlertDialog(
+                  title: Text('An error occurred!'),
+                  content: Text('Something went wrong.'),
+                  actions: <Widget>[
+                    FlatButton(
+                        child: Text('Okay'),
+                        onPressed: () {
+                          Navigator.of(ctx).pop();
+                        })
+                  ]));
     }
-    setState(() {
-      _isLoading = false;
-    });
     Navigator.of(context).pop();
-    // Navigator.of(context).pop();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Form(
-          key: _data,
-          child: ListView(padding: const EdgeInsets.all(10), children: <Widget>[
-            //Title
-            TextFormField(
-              initialValue: _initValues['namePayment'],
-              decoration: InputDecoration(labelText: 'Title'),
-              textInputAction: TextInputAction.next,
-              onFieldSubmitted: (_) {
-                FocusScope.of(context).requestFocus(_namepaymentFocusNode);
-              },
-              validator: (value) {
-                if (value.isEmpty) {
-                  return 'Please provide the name.';
-                }
-                return null;
-              },
-              onSaved: (value) {
-                _addPayment = Payment(
-                  namePayment: value,
-                  amount: _addPayment.amount,
-                  date: _addPayment.date,
-                  autopaid: _addPayment.autopaid,
-                  notification: _addPayment.notification,
-                  id: _addPayment.id,
-                );
-              },
-            ),
-            Container(
-              height: 10,
-              width: 10,
-            ),
-            TextFormField(
-              initialValue: _initValues['amount'],
-              decoration: InputDecoration(labelText: 'Amount'),
-              textInputAction: TextInputAction.next,
-              keyboardType: TextInputType.number,
-              focusNode: _namepaymentFocusNode,
-              onFieldSubmitted: (_) {
-                FocusScope.of(context).requestFocus(_amountFocusNode);
-              },
-              validator: (value) {
-                if (value.isEmpty) {
-                  return 'Please provide the price.';
-                }
-                if (double.tryParse(value) == null) {
-                  return 'Please enter a valid number.';
-                }
-                if (double.parse(value) <= 0) {
-                  return 'Please enter a number greater than zero.';
-                }
-                return null;
-              },
-              onSaved: (value) {
-                _addPayment = Payment(
-                   namePayment: _addPayment.namePayment,
-                  amount: double.parse(value),
-                  date: _addPayment.date,
-                  autopaid: _addPayment.autopaid,
-                  notification: _addPayment.notification,
-                  id: _addPayment.id,
-                );
-              },
-            ),
-            Container(
-              height: 30,
-            ),
-            //Date
-            Container(height: 30),
-            ListTile(
-              leading: Icon(Icons.date_range),
-              title: GestureDetector(
-                  child: Text(
-                    'Data of purchase',
-                    textAlign: TextAlign.justify,
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
-                  onTap: () {
-                    _presentDatePicker();
-                  }),
-              trailing: Text(
-                _selectedDate == null
-                    ? 'No Date entered!'
-                    : '${DateFormat.yMd().format(_selectedDate)}',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15,
-                  color: Theme.of(context).backgroundColor,
-                ),
-              ),
-            ),
-            TextFormField(
-              enabled: false,
-              onSaved: (value) {
-                _displayDate = DateFormat('yyyy-MM-dd').format(_selectedDate);
-                _addPayment = Payment(
-                  namePayment: _addPayment.namePayment,
-                  amount: _addPayment.amount,
-                  date: _displayDate,
-                  autopaid: _addPayment.autopaid,
-                  notification: _addPayment.notification,
-                  id: _addPayment.id,
-                );
-              },
-            ),
-            Container(
-              height: 10,
-              width: 10,
-            ),
-            SizedBox(
-              height: 20,
-              width: 10,
-              //child: Text('Subscriptions'),
-            ),
-            ListTile(
-              leading: Icon(Icons.subscriptions),
-              title: Text('Is a subscription?',
-                  textAlign: TextAlign.justify,
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).primaryColor,
-                  )),
-              trailing: CustomSwitch(
-                activeColor: Theme.of(context).buttonColor,
-                value: _isSubscription,
-                onChanged: (value) {
-                  setState(() {
-                    _addPayment.autopaid = value;
-                  });
-                },
-              ),
-            ),
-            Visibility(
-              visible: false,
-              child: Expanded(
-                child: TextFormField(
-                    initialValue: _initValues['autopaid'],
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return "NULL";
-                      }
-                      return null;
-                    },
-                    onSaved: (value) {
-                      _addPayment = Payment(
-                        namePayment: _addPayment.namePayment,
-                        amount: _addPayment.amount,
-                        date: _addPayment.date,
-                        autopaid: _addPayment.autopaid,
-                        notification: _addPayment.notification,
-                        id: _addPayment.id,
-                      );
-                    }),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-              width: 10,
-              //child: Text('Notifications'),
-            ),
-            ListTile(
-              leading: Icon(Icons.notification_important),
-              title: Text('Activate Notifications',
-                  textAlign: TextAlign.justify,
-                  style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).primaryColor)),
-              trailing: CustomSwitch(
-                activeColor: Theme.of(context).buttonColor,
-                value: _status,
-                onChanged: (value) {
-                  setState(() {
-                    _status = value;
-                  });
-                },
-              ),
-            ),
-            Visibility(
-              visible: false,
-              child: Expanded(
-                child: TextFormField(validator: (value) {
-                  if (value == null) {
-                    return "NULL";
-                  }
-                  return null;
-                }, onSaved: (value) {
-                  _addPayment = Payment(
-                    namePayment: _addPayment.namePayment,
-                    amount: _addPayment.amount,
-                    date: _addPayment.date,
-                    autopaid: _status,
-                    notification: _addPayment.notification,
-                    id: _addPayment.id,
-                  );
-                }),
-              ),
-            ),
-            SizedBox(width: 10, height: 20),
-            RaisedButton(
-                child: Text(
-                  'Add Payment',
-                  textAlign: TextAlign.justify,
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).highlightColor,
-                  ),
-                ),
-                onPressed: _submitData),
-          ]),
-        ),
-      ), //SizedBox(height: 30),
-    );
+        appBar: AppBar(),
+        body: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Form(
+                key: _data,
+                child: ListView(
+                    padding: const EdgeInsets.all(10),
+                    children: <Widget>[
+                      //Title
+                      TextFormField(
+                          initialValue: _initValues['namePayment'],
+                          decoration: InputDecoration(labelText: 'Title'),
+                          textInputAction: TextInputAction.next,
+                          onFieldSubmitted: (_) {
+                            FocusScope.of(context)
+                                .requestFocus(_namepaymentFocusNode);
+                          },
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return 'Please provide the name.';
+                            }
+                            return null;
+                          },
+                          onSaved: (value) {
+                            _addPayment = Payment(
+                              namePayment: value,
+                              amount: _addPayment.amount,
+                              date: _addPayment.date,
+                              autopaid: _addPayment.autopaid,
+                              notification: _addPayment.notification,
+                              id: _addPayment.id,
+                            );
+                          }),
+                      Container(height: 10, width: 10),
+                      TextFormField(
+                          initialValue: _initValues['amount'],
+                          decoration: InputDecoration(labelText: 'Amount'),
+                          textInputAction: TextInputAction.next,
+                          keyboardType: TextInputType.number,
+                          focusNode: _namepaymentFocusNode,
+                          onFieldSubmitted: (_) {
+                            FocusScope.of(context)
+                                .requestFocus(_amountFocusNode);
+                          },
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return 'Please provide the price.';
+                            }
+                            if (double.tryParse(value) == null) {
+                              return 'Please enter a valid number.';
+                            }
+                            if (double.parse(value) <= 0) {
+                              return 'Please enter a number greater than zero.';
+                            }
+                            return null;
+                          },
+                          onSaved: (value) {
+                            _addPayment = Payment(
+                              namePayment: _addPayment.namePayment,
+                              amount: double.parse(value),
+                              date: _addPayment.date,
+                              autopaid: _addPayment.autopaid,
+                              notification: _addPayment.notification,
+                              id: _addPayment.id,
+                            );
+                          }),
+                      Container(height: 30),
+                      //Date
+                      Container(height: 30),
+                      ListTile(
+                          leading: Icon(Icons.date_range),
+                          title: GestureDetector(
+                              child: Text('Data of purchase',
+                                  textAlign: TextAlign.justify,
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                      color: Theme.of(context).primaryColor)),
+                              onTap: () {
+                                _presentDatePicker();
+                              }),
+                          trailing: Text(
+                            _selectedDate == null
+                                ? 'No Date entered!'
+                                : '${DateFormat.yMd().format(_selectedDate)}',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                                color: Theme.of(context).backgroundColor),
+                          )),
+                      TextFormField(
+                          enabled: false,
+                          onSaved: (value) {
+                            _displayDate =
+                                DateFormat('yyyy-MM-dd').format(_selectedDate);
+                            _addPayment = Payment(
+                              namePayment: _addPayment.namePayment,
+                              amount: _addPayment.amount,
+                              date: _displayDate,
+                              autopaid: _addPayment.autopaid,
+                              notification: _addPayment.notification,
+                              id: _addPayment.id,
+                            );
+                          }),
+                      Container(height: 10, width: 10),
+                      SizedBox(height: 20, width: 10),
+                      ListTile(
+                          leading: Icon(Icons.subscriptions),
+                          title: Text('Is a subscription?',
+                              textAlign: TextAlign.justify,
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                  color: Theme.of(context).primaryColor)),
+                          trailing: CustomSwitch(
+                              activeColor: Theme.of(context).buttonColor,
+                              value: _isSubscription,
+                              onChanged: (value) {
+                                setState(() {
+                                  _addPayment.autopaid = value;
+                                });
+                              })),
+                      Visibility(
+                          visible: false,
+                          child: Expanded(
+                              child: TextFormField(
+                                  initialValue: _initValues['autopaid'],
+                                  validator: (value) {
+                                    if (value.isEmpty) {
+                                      return "NULL";
+                                    }
+                                    return null;
+                                  },
+                                  onSaved: (value) {
+                                    _addPayment = Payment(
+                                      namePayment: _addPayment.namePayment,
+                                      amount: _addPayment.amount,
+                                      date: _addPayment.date,
+                                      autopaid: _addPayment.autopaid,
+                                      notification: _addPayment.notification,
+                                      id: _addPayment.id,
+                                    );
+                                  }))),
+                      SizedBox(height: 20, width: 10),
+                      ListTile(
+                          leading: Icon(Icons.notification_important),
+                          title: Text('Activate Notifications',
+                              textAlign: TextAlign.justify,
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                  color: Theme.of(context).primaryColor)),
+                          trailing: CustomSwitch(
+                              activeColor: Theme.of(context).buttonColor,
+                              value: _status,
+                              onChanged: (value) {
+                                setState(() {
+                                  _status = value;
+                                });
+                              })),
+                      Visibility(
+                          visible: false,
+                          child: Expanded(
+                              child: TextFormField(validator: (value) {
+                            if (value == null) {
+                              return "NULL";
+                            }
+                            return null;
+                          }, onSaved: (value) {
+                            _addPayment = Payment(
+                              namePayment: _addPayment.namePayment,
+                              amount: _addPayment.amount,
+                              date: _addPayment.date,
+                              autopaid: _status,
+                              notification: _addPayment.notification,
+                              id: _addPayment.id,
+                            );
+                          }))),
+                      SizedBox(width: 10, height: 20),
+                      RaisedButton(
+                          child: Text('Add Payment',
+                              textAlign: TextAlign.justify,
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).highlightColor,
+                              )),
+                          onPressed: _submitData),
+                    ]))));
   }
 }

@@ -1,10 +1,7 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_reminder_payment/widgets/auth_form.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 class AuthScreen extends StatefulWidget {
   @override
@@ -68,11 +65,10 @@ class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
-      body: AuthForm(
-        _submitAuthForm,
-        _isLoading,
-      ),
-    );
+        backgroundColor: Theme.of(context).primaryColor,
+        body: AuthForm(
+          _submitAuthForm,
+          _isLoading,
+        ));
   }
 }

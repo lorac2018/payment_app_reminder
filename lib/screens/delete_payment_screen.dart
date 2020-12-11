@@ -13,62 +13,55 @@ class DeletePaymentScreen extends StatelessWidget {
         ModalRoute.of(context).settings.arguments as String; //the id
     final payments = Provider.of<Payments>(context).findById(paymentId);
 
-    return  RichAlertDialog(
-        alertTitle: Text(
-          "Delete Payment?",
+    return RichAlertDialog(
+      alertTitle: Text("Delete Payment?",
           style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 24,
-            fontFamily: 'Quicksand',
-            color: Theme.of(context).accentColor,
-          ),
-          textAlign: TextAlign.justify,
-        ),
-        alertSubtitle: Text(
-          "Have you cancelled the subscription?",
+              fontWeight: FontWeight.bold,
+              fontSize: 24,
+              fontFamily: 'Quicksand',
+              color: Theme.of(context).accentColor),
+          textAlign: TextAlign.justify),
+      alertSubtitle: Text("Have you cancelled the subscription?",
           style: TextStyle(
-            fontFamily: 'Quicksand',
-            fontWeight: FontWeight.bold,
-            fontSize: 18,
-            color: Theme.of(context).primaryColor,
-          ),
-          textAlign: TextAlign.justify,
-        ),
-        alertType: RichAlertType.WARNING,
-        actions: <Widget>[
-          FlatButton(
-            child: Text("YES",
-                style: TextStyle(
+              fontFamily: 'Quicksand',
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+              color: Theme.of(context).primaryColor),
+          textAlign: TextAlign.justify),
+      alertType: RichAlertType.WARNING,
+      actions: <Widget>[
+        FlatButton(
+          child: Text("YES",
+              style: TextStyle(
                   fontFamily: 'Quicksand',
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
-                  color: Theme.of(context).accentColor,
-                ),
-                textAlign: TextAlign.justify),
-            onPressed: () async {
-              try {
-                Provider.of<Payments>(context, listen: false)
-                    .deletePayments(payments.id);
-                Navigator.of(context).pushNamed(HomePage.routeName);
-              } catch (error) {
-                print(error);
-              }
-            },
-          ),
-          FlatButton(
-            child: Text("NO",
-                style: TextStyle(
-                  fontFamily: 'Quicksand',
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                  color: Theme.of(context).accentColor,
-                ),
-                textAlign: TextAlign.justify),
-            onPressed: () {
-              Navigator.of(context).pop(false);
-            },
-          ),
-        ],
-      );
+                  color: Theme.of(context).accentColor),
+              textAlign: TextAlign.justify),
+          onPressed: () async {
+            try {
+              Provider.of<Payments>(context, listen: false)
+                  .deletePayments(payments.id);
+              Navigator.of(context).pushNamed(HomePage.routeName);
+            } catch (error) {
+              print(error);
+            }
+          },
+        ),
+        FlatButton(
+          child: Text("NO",
+              style: TextStyle(
+                fontFamily: 'Quicksand',
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+                color: Theme.of(context).accentColor,
+              ),
+              textAlign: TextAlign.justify),
+          onPressed: () {
+            Navigator.of(context).pop(false);
+          },
+        ),
+      ],
+    );
   }
 }

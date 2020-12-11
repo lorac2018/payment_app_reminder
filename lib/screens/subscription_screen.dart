@@ -18,61 +18,44 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
         ModalRoute.of(context).settings.arguments as String; //the id
     var payments = Provider.of<Payments>(context).findById(paymentId);
     return Scaffold(
-      appBar: AppBar(
-        title: Text(payments.namePayment),
-      ),
-      body: ListView(
-        children: [
+        appBar: AppBar(
+          title: Text(payments.namePayment),
+        ),
+        body: ListView(children: [
           Card(
-            child: ListTile(
-              leading: Icon(
-                Icons.category,
-              ),
-              title: Text(
-                'Count of subscriptions',
+              child: ListTile(
+                  leading: Icon(
+                    Icons.category,
+                  ),
+                  title: Text('Count of subscriptions',
+                      textAlign: TextAlign.justify,
+                      style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).primaryColor)),
+                  trailing: Text(payments.n_subscriptions.toString(),
+                      textAlign: TextAlign.justify,
+                      style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).backgroundColor)))),
+          Card(
+              child: ListTile(
+            leading: Icon(Icons.insert_chart),
+            title: Text('Data Visualization',
                 textAlign: TextAlign.justify,
                 style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
-                    color: Theme.of(context).primaryColor),
-              ),
-              trailing: Text(
-                payments.n_subscriptions.toString(),
+                    color: Theme.of(context).primaryColor)),
+            trailing: Text('Press here',
                 textAlign: TextAlign.justify,
                 style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).backgroundColor,
-                ),
-              ),
-            ),
-          ),
-          Card(
-            child: ListTile(
-              leading: Icon(
-                Icons.insert_chart,
-              ),
-              title: Text('Data Visualization',
-                  textAlign: TextAlign.justify,
-                  style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
-                    color: Theme.of(context).primaryColor,
-                  )),
-              trailing: Text(
-                'Press here',
-                textAlign: TextAlign.justify,
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).backgroundColor,
-                ),
-              ),
-              onTap: () {},
-            ),
-          ),
-        ],
-      ),
-    );
+                    color: Theme.of(context).backgroundColor)),
+            onTap: () {},
+          ))
+        ]));
   }
 }

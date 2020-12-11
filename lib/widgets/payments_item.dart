@@ -20,67 +20,41 @@ class PaymentsItem extends StatelessWidget {
   Widget build(BuildContext context) {
     var payment = Provider.of<Payment>(context);
     return Card(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Container(
-            margin: EdgeInsets.all(10),
-            padding: EdgeInsets.all(10),
-            child: Text(
-              /*'£' + amount.toStringAsFixed(2),*/
-              '£' + payment.amount.toStringAsFixed(2),
-              textAlign: TextAlign.justify,
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
-                color: Theme
-                    .of(context)
-                    .primaryColor,
-              ),
-            ),
-          ),
-          Column(
+        child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text(
-                payment.namePayment,
+          Container(
+              margin: EdgeInsets.all(10),
+              padding: EdgeInsets.all(10),
+              child: Text(
+                  /*'£' + amount.toStringAsFixed(2),*/
+                  '£' + payment.amount.toStringAsFixed(2),
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).primaryColor))),
+          Column(children: <Widget>[
+            Text(payment.namePayment,
                 textAlign: TextAlign.justify,
                 style: TextStyle(
-                  fontSize: 17.50,
-                  fontWeight: FontWeight.normal,
-                  color: Theme
-                      .of(context)
-                      .backgroundColor,
-                ),
-              ),
-            ],
-          ),
-          Column(
-            children: [
-              IconButton(
-                icon: Icon(
-                  Icons.info,
-                  color: Theme
-                      .of(context)
-                      .primaryColor,
-                ),
+                    fontSize: 17.50,
+                    fontWeight: FontWeight.normal,
+                    color: Theme.of(context).backgroundColor))
+          ]),
+          Column(children: [
+            IconButton(
+                icon: Icon(Icons.info, color: Theme.of(context).primaryColor),
                 onPressed: () {
                   Navigator.of(context).pushNamed(PaymentDetailScreen.routeName,
                       arguments: payment.id);
-                },
-              ),
-              IconButton(
-                icon: Icon(
-                  Icons.account_balance_wallet,
-                  color: Theme
-                      .of(context)
-                      .buttonColor,
-                ),
-                onPressed: () {},
-              )
-            ],
-          ),
-        ],
-      ),
-    );
+                }),
+            IconButton(
+              icon: Icon(Icons.account_balance_wallet,
+                  color: Theme.of(context).buttonColor),
+              onPressed: () {},
+            )
+          ])
+        ]));
   }
 }

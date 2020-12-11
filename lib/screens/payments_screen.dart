@@ -38,12 +38,13 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
     final payments = fetchedPayment.itemsPayments;
     return Scaffold(
       body: ListView.builder(
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
         itemCount: payments.length,
-        itemBuilder: (ctx, i) =>
-            ChangeNotifierProvider.value(
-              value: payments[i],
-              child: PaymentsItem(),
-            ),
+        itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
+          value: payments[i],
+          child: PaymentsItem(),
+        ),
       ),
     );
   }

@@ -105,8 +105,6 @@ class Payments with ChangeNotifier {
     }
   }
 
-
-
   Future<void> addPayment(Payment payment) async {
     const url =
         'https://paymentreminderapp2-default-rtdb.firebaseio.com/payments.json';
