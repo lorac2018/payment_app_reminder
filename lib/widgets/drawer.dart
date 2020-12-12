@@ -25,13 +25,14 @@ class MainDrawer extends StatelessWidget {
   }
 
   Widget _drawerHeader() {
+    FirebaseAuth _auth = FirebaseAuth.instance;
     return DrawerHeader(
         decoration: BoxDecoration(color: Color.fromRGBO(56, 90, 124, 1)),
         child: Stack(children: <Widget>[
           Positioned(
               bottom: 5,
               left: 5,
-              child: Text("Options Available",
+              child: Text('Welcome' + '\n' + _auth.currentUser.displayName + '!',
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 20.0,

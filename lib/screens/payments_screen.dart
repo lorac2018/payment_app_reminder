@@ -22,7 +22,7 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
       setState(() {
         _isLoading = false;
       });
-      Provider.of<Payments>(context).fetchPayments().then((_) {
+      Provider.of<Payments>(context).fetchPaymentsbyUserId().then((_) {
         setState(() {
           _isLoading = true;
         });

@@ -6,8 +6,6 @@ import '../widgets/drawer.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
-  //String titleInput;
-  //String amountInput;
   static const routeName = '/homepage';
 
   @override

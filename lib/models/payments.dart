@@ -11,6 +11,7 @@ import 'package:http/http.dart' as http;
 
 class Payments with ChangeNotifier {
   List<Payment> _payments = [];
+  String userId = FirebaseAuth.instance.currentUser.uid;
 
   List<Payment> get itemsPayments {
     return [..._payments];
@@ -178,5 +179,33 @@ class Payments with ChangeNotifier {
 
   int get itemCount {
     return _payments.length;
+  }
+
+  Future<void> fetchPaymentsbyUserId() async {
+    var url =
+        'https://paymentreminderapp2-default-rtdb.firebaseio.com/payments.json?orderBy="userId"&equalTo="$userId"';
+    try {
+      final response = await http.get(url);
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+      print(extractedData);
+      if (extractedData == null) {
+        return;
+      }
+      final List<Payment> loadedProducts = [];
+      extractedData.forEach((payId, data) {
+        loadedProducts.add(Payment(
+          id: payId,
+          namePayment: data['name_payment'],
+          amount: data['amount'],
+          date: data['date'],
+          autopaid: data['autopaid'],
+          notification: data['notification'],
+        ));
+      });
+      _payments = loadedProducts;
+      notifyListeners();
+    } catch (error) {
+      throw (error);
+    }
   }
 }

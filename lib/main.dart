@@ -22,6 +22,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //final AuthService auth = Provider.of<AuthService>(context);
+    FirebaseAuth user = FirebaseAuth.instance;
+    String userid = user.currentUser.uid;
+
     return ChangeNotifierProvider(
       create: (c) => Payments(),
       child: MaterialApp(
@@ -38,9 +41,11 @@ class MyApp extends StatelessWidget {
             errorColor: Colors.red,
             fontFamily: 'Quicksand'),
         home: StreamBuilder(
+            //Firestore.instance.collection('users').document(getUID()).snapshots(),
             stream: FirebaseAuth.instance.authStateChanges(),
             builder: (ctx, userSnapshot) {
-              if (userSnapshot.hasData) {
+              if (userSnapshot.hasData && userSnapshot.data.uid == userid)  {
+                print(userSnapshot.data.uid);
                 return HomePage();
               }
               return AuthScreen();

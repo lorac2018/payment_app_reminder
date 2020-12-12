@@ -31,10 +31,15 @@ class _AuthScreenState extends State<AuthScreen> {
           password: password,
         );
       } else {
-        authResult = await _auth.createUserWithEmailAndPassword(
+        authResult = await _auth
+            .createUserWithEmailAndPassword(
           email: email,
           password: password,
-        );
+        ).then((userCred) {
+          userCred.user.updateProfile(
+            displayName: username,
+          );
+        });
       }
     } on PlatformException catch (err) {
       var message = 'An error occurred, pelase check your credentials!';
@@ -60,6 +65,7 @@ class _AuthScreenState extends State<AuthScreen> {
     }
     print(_auth.currentUser.email);
     print(_auth.currentUser.uid);
+    print(_auth.currentUser.displayName);
   }
 
   @override

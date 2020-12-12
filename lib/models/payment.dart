@@ -20,6 +20,6 @@ class Payment with ChangeNotifier{
     @required this.date,
     this.n_subscriptions,
     this.autopaid = false,
-    this.notification = false,
+    this.notification = false, userId,
   });
 }
