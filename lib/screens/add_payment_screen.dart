@@ -16,7 +16,8 @@ class NewPaymentScreen extends StatefulWidget {
 
 class _NewPaymentScreenState extends State<NewPaymentScreen> {
   final _amountFocusNode = FocusNode();
-  final _namepaymentFocusNode = FocusNode();
+  final _namePaymentFocusNode = FocusNode();
+  final budgetFocusNode = FocusNode();
   final _dateFocusNode = FocusNode();
   final _data = GlobalKey<FormState>();
   DateTime _selectedDate;
@@ -71,7 +72,7 @@ class _NewPaymentScreenState extends State<NewPaymentScreen> {
   @override
   void dispose() {
     _amountFocusNode.dispose();
-    _namepaymentFocusNode.dispose();
+    _namePaymentFocusNode.dispose();
     _dateFocusNode.dispose();
 
     super.dispose();
@@ -139,7 +140,7 @@ class _NewPaymentScreenState extends State<NewPaymentScreen> {
                           textInputAction: TextInputAction.next,
                           onFieldSubmitted: (_) {
                             FocusScope.of(context)
-                                .requestFocus(_namepaymentFocusNode);
+                                .requestFocus(_namePaymentFocusNode);
                           },
                           validator: (value) {
                             if (value.isEmpty) {
@@ -163,7 +164,7 @@ class _NewPaymentScreenState extends State<NewPaymentScreen> {
                           decoration: InputDecoration(labelText: 'Amount'),
                           textInputAction: TextInputAction.next,
                           keyboardType: TextInputType.number,
-                          focusNode: _namepaymentFocusNode,
+                          focusNode: _amountFocusNode,
                           onFieldSubmitted: (_) {
                             FocusScope.of(context)
                                 .requestFocus(_amountFocusNode);

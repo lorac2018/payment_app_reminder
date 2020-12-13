@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_reminder_payment/screens/subscription_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../screens/add_payment_screen.dart';
 import '../models/payments.dart';
 import '../screens/payments_screen.dart';
 import '../widgets/drawer.dart';
 import 'package:provider/provider.dart';
+import '../screens/budget_popupdialog.dart';
 
 class HomePage extends StatefulWidget {
   static const routeName = '/homepage';
@@ -15,6 +18,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   var _isInit = false;
   var _isLoading = false;
+  List<Map<String, Object>> _pages;
+  int _selectedPageIndex = 0;
 
   @override
   void initState() {
@@ -40,44 +45,29 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Payment Reminder App',
-          style: TextStyle(fontSize: 18),
+        appBar: AppBar(
+          title: Text(
+            'Payment App Reminder',
+            style: TextStyle(fontSize: 18),
+          ),
+          centerTitle: true,
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.add),
+              onPressed: () => {
+                Navigator.of(context).pushNamed(NewPaymentScreen.routeName),
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () {},
+            ),
+            // StatelessWidgetDemo(),
+          ],
         ),
-        centerTitle: true,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () => {
-              Navigator.of(context).pushNamed(NewPaymentScreen.routeName),
-            },
-          ),
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () {},
-          ),
-          IconButton(
-              icon: Icon(Icons.notifications),
-              onPressed: () {
-                // Navigator.push(context,
-                //     MaterialPageRoute(builder: (context) => Notifications()));
-              }),
-        ],
-      ),
-      drawer: MainDrawer(),
-      body: _isLoading
-          ? Center(child: CircularProgressIndicator())
-          : PaymentsScreen(),
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Theme.of(context).highlightColor,
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: Theme.of(context).primaryColor,
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'home'),
-          BottomNavigationBarItem(icon: Icon(Icons.history), label: 'history'),
-        ],
-      ),
-    );
+        drawer: MainDrawer(),
+        body: _isLoading
+            ? Center(child: CircularProgressIndicator())
+            : PaymentsScreen());
   }
 }

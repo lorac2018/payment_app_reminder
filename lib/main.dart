@@ -11,6 +11,8 @@ import './screens/payment_detail_screen.dart';
 import './screens/subscription_screen.dart';
 import 'screens/delete_payment_screen.dart';
 import 'models/payments.dart';
+import 'screens/budget_popupdialog.dart';
+import 'screens/tabs_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,8 +24,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //final AuthService auth = Provider.of<AuthService>(context);
-    FirebaseAuth user = FirebaseAuth.instance;
-    String userid = user.currentUser.uid;
 
     return ChangeNotifierProvider(
       create: (c) => Payments(),
@@ -44,20 +44,21 @@ class MyApp extends StatelessWidget {
             //Firestore.instance.collection('users').document(getUID()).snapshots(),
             stream: FirebaseAuth.instance.authStateChanges(),
             builder: (ctx, userSnapshot) {
-              if (userSnapshot.hasData && userSnapshot.data.uid == userid)  {
+              if (userSnapshot.hasData) {
                 print(userSnapshot.data.uid);
-                return HomePage();
+                return TabsScreen();
               }
               return AuthScreen();
             }),
         routes: {
           //HomePage.routeName: (ctx) => HomePage(),
+          // '/': (ctx) => TabsScreen(),
           PaymentDetailScreen.routeName: (ctx) => PaymentDetailScreen(),
           SubscriptionScreen.routeName: (ctx) => SubscriptionScreen(),
           NewPaymentScreen.routeName: (ctx) => NewPaymentScreen(),
           NotificationScreen.routename: (ctx) => NotificationScreen(),
           EditPaymentScreen.routeName: (ctx) => EditPaymentScreen(),
-          DeletePaymentScreen.routeName: (ctx) => DeletePaymentScreen()
+          DeletePaymentScreen.routeName: (ctx) => DeletePaymentScreen(),
         },
       ),
     );

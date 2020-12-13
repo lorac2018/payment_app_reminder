@@ -35,6 +35,7 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
   @override
   Widget build(BuildContext context) {
     final fetchedPayment = Provider.of<Payments>(context);
+
     final payments = fetchedPayment.itemsPayments;
     return Scaffold(
       body: ListView.builder(
@@ -43,7 +44,7 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
         itemCount: payments.length,
         itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
           value: payments[i],
-          child: PaymentsItem(),
+          child: PaymentsItem()
         ),
       ),
     );

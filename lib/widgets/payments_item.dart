@@ -53,8 +53,8 @@ class PaymentsItem extends StatelessWidget {
               icon: Icon(Icons.account_balance_wallet,
                   color: Theme.of(context).buttonColor),
               onPressed: () {},
-            )
-          ])
+            ),
+          ]),
         ]));
   }
 }

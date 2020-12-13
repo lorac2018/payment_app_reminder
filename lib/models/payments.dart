@@ -94,6 +94,7 @@ class Payments with ChangeNotifier {
           id: payId,
           namePayment: data['name_payment'],
           amount: data['amount'],
+          budget: data['budget'],
           date: data['date'],
           autopaid: data['autopaid'],
           notification: data['notification'],
@@ -149,6 +150,7 @@ class Payments with ChangeNotifier {
           body: json.encode({
             'name_payment': newPayment.namePayment,
             'amount': newPayment.amount,
+            'budget': newPayment.budget,
             'date': newPayment.date,
             'autopaid': newPayment.autopaid,
             'notification': newPayment.notification,
@@ -197,6 +199,7 @@ class Payments with ChangeNotifier {
           id: payId,
           namePayment: data['name_payment'],
           amount: data['amount'],
+          budget: data['budget'],
           date: data['date'],
           autopaid: data['autopaid'],
           notification: data['notification'],
