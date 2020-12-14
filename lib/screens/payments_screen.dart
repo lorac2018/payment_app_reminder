@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_reminder_payment/models/payments.dart';
-import 'package:flutter_reminder_payment/widgets/payments_item.dart';
+import '../models/payments.dart';
+import '../widgets/payments_item.dart';
 import 'package:provider/provider.dart';
 
 class PaymentsScreen extends StatefulWidget {
@@ -22,7 +22,7 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
       setState(() {
         _isLoading = false;
       });
-      Provider.of<Payments>(context).fetchPaymentsbyUserId().then((_) {
+      Provider.of<Payments>(context).fetchPaymentsByUserId().then((_) {
         setState(() {
           _isLoading = true;
         });

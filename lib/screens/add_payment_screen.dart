@@ -30,15 +30,12 @@ class _NewPaymentScreenState extends State<NewPaymentScreen> {
     namePayment: '',
     amount: 0,
     date: null,
-    autopaid: false,
-    notification: false,
   );
   var _initValues = {
     'namePayment': '',
     'amount': '',
     'date': '',
-    'autopaid': '',
-    'notification': '',
+    'autoPaid': '',
   };
   var _isInit = true;
 
@@ -60,8 +57,7 @@ class _NewPaymentScreenState extends State<NewPaymentScreen> {
           'namePayment': _addPayment.namePayment,
           'amount': _addPayment.amount.toString(),
           'date': _addPayment.date.toString(),
-          'autopaid': _addPayment.autopaid.toString(),
-          'notification': _addPayment.notification.toString()
+          'autoPaid': _addPayment.autoPaid.toString(),
         };
       }
     }
@@ -153,8 +149,7 @@ class _NewPaymentScreenState extends State<NewPaymentScreen> {
                               namePayment: value,
                               amount: _addPayment.amount,
                               date: _addPayment.date,
-                              autopaid: _addPayment.autopaid,
-                              notification: _addPayment.notification,
+                              autoPaid: _addPayment.autoPaid,
                               id: _addPayment.id,
                             );
                           }),
@@ -186,8 +181,7 @@ class _NewPaymentScreenState extends State<NewPaymentScreen> {
                               namePayment: _addPayment.namePayment,
                               amount: double.parse(value),
                               date: _addPayment.date,
-                              autopaid: _addPayment.autopaid,
-                              notification: _addPayment.notification,
+                              autoPaid: _addPayment.autoPaid,
                               id: _addPayment.id,
                             );
                           }),
@@ -224,8 +218,7 @@ class _NewPaymentScreenState extends State<NewPaymentScreen> {
                               namePayment: _addPayment.namePayment,
                               amount: _addPayment.amount,
                               date: _displayDate,
-                              autopaid: _addPayment.autopaid,
-                              notification: _addPayment.notification,
+                              autoPaid: _addPayment.autoPaid,
                               id: _addPayment.id,
                             );
                           }),
@@ -244,7 +237,7 @@ class _NewPaymentScreenState extends State<NewPaymentScreen> {
                               value: _isSubscription,
                               onChanged: (value) {
                                 setState(() {
-                                  _addPayment.autopaid = value;
+                                  _addPayment.autoPaid = value;
                                 });
                               })),
                       Visibility(
@@ -263,47 +256,11 @@ class _NewPaymentScreenState extends State<NewPaymentScreen> {
                                       namePayment: _addPayment.namePayment,
                                       amount: _addPayment.amount,
                                       date: _addPayment.date,
-                                      autopaid: _addPayment.autopaid,
-                                      notification: _addPayment.notification,
+                                      autoPaid: _addPayment.autoPaid,
                                       id: _addPayment.id,
                                     );
                                   }))),
                       SizedBox(height: 20, width: 10),
-                      ListTile(
-                          leading: Icon(Icons.notification_important),
-                          title: Text('Activate Notifications',
-                              textAlign: TextAlign.justify,
-                              style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                  color: Theme.of(context).primaryColor)),
-                          trailing: CustomSwitch(
-                              activeColor: Theme.of(context).buttonColor,
-                              value: _status,
-                              onChanged: (value) {
-                                setState(() {
-                                  _status = value;
-                                });
-                              })),
-                      Visibility(
-                          visible: false,
-                          child: Expanded(
-                              child: TextFormField(validator: (value) {
-                            if (value == null) {
-                              return "NULL";
-                            }
-                            return null;
-                          }, onSaved: (value) {
-                            _addPayment = Payment(
-                              namePayment: _addPayment.namePayment,
-                              amount: _addPayment.amount,
-                              date: _addPayment.date,
-                              autopaid: _status,
-                              notification: _addPayment.notification,
-                              id: _addPayment.id,
-                            );
-                          }))),
-                      SizedBox(width: 10, height: 20),
                       RaisedButton(
                           child: Text('Add Payment',
                               textAlign: TextAlign.justify,

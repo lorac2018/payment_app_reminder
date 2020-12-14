@@ -1,17 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_reminder_payment/screens/homepage_screen.dart';
+import './screens/push_notifications_screen.dart';
+import './screens/notifications_screen.dart';
 import './screens/auth_screen.dart';
 import 'package:provider/provider.dart';
 import './screens/add_payment_screen.dart';
 import './screens/edit_payment_screen.dart';
-import './screens/homepage_screen.dart';
-import './screens/notifications_screen.dart';
 import './screens/payment_detail_screen.dart';
 import './screens/subscription_screen.dart';
 import 'screens/delete_payment_screen.dart';
 import 'models/payments.dart';
-import 'screens/budget_popupdialog.dart';
 import 'screens/tabs_screen.dart';
 
 void main() async {
@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
           PaymentDetailScreen.routeName: (ctx) => PaymentDetailScreen(),
           SubscriptionScreen.routeName: (ctx) => SubscriptionScreen(),
           NewPaymentScreen.routeName: (ctx) => NewPaymentScreen(),
-          NotificationScreen.routename: (ctx) => NotificationScreen(),
+          ManageNotifications.routeName: (ctx) => ManageNotifications(),
           EditPaymentScreen.routeName: (ctx) => EditPaymentScreen(),
           DeletePaymentScreen.routeName: (ctx) => DeletePaymentScreen(),
         },

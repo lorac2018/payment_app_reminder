@@ -31,7 +31,7 @@ class Payments with ChangeNotifier {
 // return the number of subscriptions
   int numberOfSubscriptions(String paymentId) {
     var fetchedId = findById(paymentId);
-    return fetchedId.n_subscriptions;
+    return fetchedId.nSubscriptions;
   }
 
 //Função que efetua o cálculo de quantas subscrições já subscreveu
@@ -70,7 +70,7 @@ class Payments with ChangeNotifier {
     DateTime convertDate = DateTime.parse(payment.date);
 
     //Verifica se é uma subscrição, se sim, verifica se ainda não foi cobrado, associando o valor. Se for cobrado, não conta
-    if (payment.autopaid == true) {
+    if (payment.autoPaid == true) {
       //Verifica a data
 
       if (convertDate.isBefore(now)) {
@@ -96,8 +96,7 @@ class Payments with ChangeNotifier {
           amount: data['amount'],
           budget: data['budget'],
           date: data['date'],
-          autopaid: data['autopaid'],
-          notification: data['notification'],
+          autoPaid: data['autopaid'],
         ));
       });
       _payments = loadedProducts;
@@ -118,8 +117,7 @@ class Payments with ChangeNotifier {
           'amount': payment.amount,
           'budget': payment.budget,
           'date': payment.date,
-          'autopaid': payment.autopaid,
-          'notification': payment.notification,
+          'autopaid': payment.autoPaid,
           'userId': FirebaseAuth.instance.currentUser.uid,
         }),
       );
@@ -128,8 +126,7 @@ class Payments with ChangeNotifier {
         amount: payment.amount,
         budget: payment.budget,
         date: payment.date,
-        autopaid: payment.autopaid,
-        notification: payment.notification,
+        autoPaid: payment.autoPaid,
         id: json.decode(response.body)['name'],
       );
       _payments.add(newPayment);
@@ -152,8 +149,7 @@ class Payments with ChangeNotifier {
             'amount': newPayment.amount,
             'budget': newPayment.budget,
             'date': newPayment.date,
-            'autopaid': newPayment.autopaid,
-            'notification': newPayment.notification,
+            'autopaid': newPayment.autoPaid,
           }));
       _payments[paymentIndex] = newPayment;
       notifyListeners();
@@ -183,7 +179,7 @@ class Payments with ChangeNotifier {
     return _payments.length;
   }
 
-  Future<void> fetchPaymentsbyUserId() async {
+  Future<void> fetchPaymentsByUserId() async {
     var url =
         'https://paymentreminderapp2-default-rtdb.firebaseio.com/payments.json?orderBy="userId"&equalTo="$userId"';
     try {
@@ -201,8 +197,7 @@ class Payments with ChangeNotifier {
           amount: data['amount'],
           budget: data['budget'],
           date: data['date'],
-          autopaid: data['autopaid'],
-          notification: data['notification'],
+          autoPaid: data['autopaid'],
         ));
       });
       _payments = loadedProducts;

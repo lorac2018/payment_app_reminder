@@ -33,7 +33,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
                           color: Theme.of(context).primaryColor)),
-                  trailing: Text(payments.n_subscriptions.toString(),
+                  trailing: Text(payments.nSubscriptions.toString(),
                       textAlign: TextAlign.justify,
                       style: TextStyle(
                           fontSize: 15,

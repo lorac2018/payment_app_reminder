@@ -2,7 +2,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../screens/homepage_screen.dart';
-import '../screens/budget_popupdialog.dart';
 
 class MainDrawer extends StatelessWidget {
   @override

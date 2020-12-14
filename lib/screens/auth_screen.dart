@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_reminder_payment/widgets/auth_form.dart';
+import '../widgets/auth_form.dart';
 
 class AuthScreen extends StatefulWidget {
   @override

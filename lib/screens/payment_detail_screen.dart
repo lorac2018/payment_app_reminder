@@ -6,6 +6,7 @@ import '../screens/edit_payment_screen.dart';
 import '../screens/subscription_screen.dart';
 import '../models/payments.dart';
 import 'package:provider/provider.dart';
+import '../screens/notifications_screen.dart';
 
 class PaymentDetailScreen extends StatelessWidget {
   //final String title;
@@ -114,7 +115,7 @@ class PaymentDetailScreen extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context).primaryColor)),
                 trailing: LiteRollingSwitch(
-                    value: payments.autopaid,
+                    value: payments.autoPaid,
                     textOn: "On",
                     textOff: "Off",
                     colorOn: Theme.of(context).backgroundColor,
@@ -123,7 +124,7 @@ class PaymentDetailScreen extends StatelessWidget {
                     iconOff: Icons.do_not_disturb_off,
                     textSize: 15,
                     onChanged: (bool position) {
-                      payments.autopaid = position;
+                      payments.autoPaid = position;
                     })),
             Container(height: 10),
             ListTile(
@@ -137,7 +138,7 @@ class PaymentDetailScreen extends StatelessWidget {
                         color: Theme.of(context).primaryColor)),
                 trailing: Text(
                     //if subscription == true then shows the value of the subscription if not shows only the total amount of the payment
-                    payments.autopaid == true
+                    payments.autoPaid == true
                         ? '£' +
                             payment
                                 .totalAmountByProduct(paymentId)
@@ -167,45 +168,31 @@ class PaymentDetailScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                   ListTile(
-                    trailing: Icon(Icons.notifications_active),
-                    title: Text('Manage Notification',
-                        textAlign: TextAlign.right,
-                        style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).primaryColor)),
-                    /*onTap: () {
+                      trailing: Icon(Icons.notifications_active),
+                      title: Text('Manage Notification',
+                          textAlign: TextAlign.right,
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).primaryColor)),
+                      onTap: () {
                         Navigator.of(context).pushNamed(
-                            NotificationScreen.routename,
+                            ManageNotifications.routeName,
                             arguments: paymentId);
-                      }*/
-                  ),
+                      }),
                   ListTile(
-                    trailing: Icon(Icons.cancel_schedule_send_outlined),
-                    title: Text('Cancel Notification',
-                        textAlign: TextAlign.right,
-                        style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).primaryColor)),
-                    /*trailing: LiteRollingSwitch(
-                        value: payments.notification,
-                        textOn: "On",
-                        textOff: "Off",
-                        colorOn: Theme.of(context).backgroundColor,
-                        colorOff: Theme.of(context).primaryColor,
-                        iconOn: Icons.done,
-                        iconOff: Icons.do_not_disturb_off,
-                        textSize: 15,
-                        onChanged: (bool position) {
-                          payments.notification = position;
-                        },*/
-                  ),
-                  /*onTap: () {
-                        Navigator.of(context).pushNamed(
-                            NotificationScreen.routename,
-                            arguments: paymentId);
-                      }*/
+                      trailing: Icon(Icons.cancel_schedule_send_outlined),
+                      title: Text('Cancel Notification',
+                          textAlign: TextAlign.right,
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).primaryColor)),
+                      onTap: () {
+                        //Navigator.of(context).pushNamed(
+                        //NotificationScreen.routename,
+                        //arguments: paymentId);
+                      }),
                 ])),
             ListTile(
               leading:

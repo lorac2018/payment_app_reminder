@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_reminder_payment/screens/subscription_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import '../screens/push_notifications_screen.dart';
 import '../screens/add_payment_screen.dart';
 import '../models/payments.dart';
 import '../screens/payments_screen.dart';
 import '../widgets/drawer.dart';
 import 'package:provider/provider.dart';
-import '../screens/budget_popupdialog.dart';
 
 class HomePage extends StatefulWidget {
   static const routeName = '/homepage';
@@ -18,8 +16,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   var _isInit = false;
   var _isLoading = false;
-  List<Map<String, Object>> _pages;
-  int _selectedPageIndex = 0;
+  bool dialogOpened = true;
 
   @override
   void initState() {
@@ -53,9 +50,15 @@ class _HomePageState extends State<HomePage> {
           centerTitle: true,
           actions: <Widget>[
             IconButton(
+                icon: Icon(Icons.notifications_active),
+                onPressed: () {
+                  Navigator.of(context)
+                      .pushNamed(LocalPushNotifications.routeName);
+                }),
+            IconButton(
               icon: Icon(Icons.add),
-              onPressed: () => {
-                Navigator.of(context).pushNamed(NewPaymentScreen.routeName),
+              onPressed: () {
+                Navigator.of(context).pushNamed(NewPaymentScreen.routeName);
               },
             ),
             IconButton(
