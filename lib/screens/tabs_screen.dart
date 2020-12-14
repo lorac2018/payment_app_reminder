@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_reminder_payment/models/payments.dart';
-import 'package:flutter_reminder_payment/screens/auth_screen.dart';
-import 'package:provider/provider.dart';
+import '../screens/auth_screen.dart';
 import '../screens/homepage_screen.dart';
 import '../widgets/drawer.dart';
 
@@ -11,8 +9,6 @@ class TabsScreen extends StatefulWidget {
 }
 
 class _TabsScreenState extends State<TabsScreen> {
-  var _isInit = false;
-  var _isLoading = false;
   bool dialogOpened = true;
 
   List<Map<String, Object>> _pages;
@@ -32,7 +28,7 @@ class _TabsScreenState extends State<TabsScreen> {
     ];
     super.initState();
   }
-  
+
 
   void _selectPage(int index) {
     setState(() {

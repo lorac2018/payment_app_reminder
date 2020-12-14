@@ -1,8 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_reminder_payment/screens/homepage_screen.dart';
-import './screens/push_notifications_screen.dart';
 import './screens/notifications_screen.dart';
 import './screens/auth_screen.dart';
 import 'package:provider/provider.dart';

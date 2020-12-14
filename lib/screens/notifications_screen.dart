@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:flutter_reminder_payment/models/payments.dart';
+import '../models/payments.dart';
 import 'package:provider/provider.dart';
 import 'ScreenSecond.dart';
 import 'local_notify_manager.dart';
@@ -40,13 +39,11 @@ class _ManageNotificationsState extends State<ManageNotifications> {
     final paymentId =
         ModalRoute.of(context).settings.arguments as String; //the id
     final payments = Provider.of<Payments>(context).findById(paymentId);
-    final payment = Provider.of<Payments>(context);
 
-    _convertDateFromString(String strDate){
+    _convertDateFromString(String strDate) {
       DateTime todayDate = DateTime.parse(strDate);
       print(todayDate);
     }
-
 
     return Scaffold(
       appBar: AppBar(
@@ -72,7 +69,7 @@ class _ManageNotificationsState extends State<ManageNotifications> {
               color: Theme.of(context).buttonColor,
               child: Text('Remind me Weekly'),
               textColor: Colors.white,
-              onPressed: () async{
+              onPressed: () async {
                 await localNotifyManager.showWeeklyNotification(
                     payments.namePayment.toString(),
                     payments.amount.toString());
@@ -84,8 +81,8 @@ class _ManageNotificationsState extends State<ManageNotifications> {
               textColor: Colors.white,
               onPressed: () async {
                 date = _convertDateFromString(payments.date);
-                await localNotifyManager.showNotificationCloseDateSubscription(payments.namePayment, payments.amount.toString(), date);
-
+                await localNotifyManager.showNotificationCloseDateSubscription(
+                    payments.namePayment, payments.amount.toString(), date);
               },
             )
           ],
