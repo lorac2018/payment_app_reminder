@@ -11,6 +11,7 @@ import './screens/subscription_screen.dart';
 import 'screens/delete_payment_screen.dart';
 import 'models/payments.dart';
 import 'screens/tabs_screen.dart';
+import 'screens/homepage_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -49,14 +50,14 @@ class MyApp extends StatelessWidget {
               return AuthScreen();
             }),
         routes: {
-          //HomePage.routeName: (ctx) => HomePage(),
-          // '/': (ctx) => TabsScreen(),
+          HomePage.routeName: (ctx) => HomePage(),
           PaymentDetailScreen.routeName: (ctx) => PaymentDetailScreen(),
           SubscriptionScreen.routeName: (ctx) => SubscriptionScreen(),
           NewPaymentScreen.routeName: (ctx) => NewPaymentScreen(),
           ManageNotifications.routeName: (ctx) => ManageNotifications(),
           EditPaymentScreen.routeName: (ctx) => EditPaymentScreen(),
           DeletePaymentScreen.routeName: (ctx) => DeletePaymentScreen(),
+
         },
       ),
     );

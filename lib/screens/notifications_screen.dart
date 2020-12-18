@@ -80,7 +80,7 @@ class _ManageNotificationsState extends State<ManageNotifications> {
               color: Theme.of(context).buttonColor,
               textColor: Colors.white,
               onPressed: () async {
-                date = _convertDateFromString(payments.date);
+                //date = _convertDateFromString(payments.date);
                 await localNotifyManager.showNotificationCloseDateSubscription(
                     payments.namePayment, payments.amount.toString(), date);
               },

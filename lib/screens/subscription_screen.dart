@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import '../models/payments.dart';
 import 'package:provider/provider.dart';
+import '../screens/graph_screen.dart';
 
 class SubscriptionScreen extends StatefulWidget {
   static const routeName = '/subscription-detail';
@@ -54,7 +55,9 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
                     color: Theme.of(context).backgroundColor)),
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).pushNamed(ChartScreen.routeName);
+            },
           ))
         ]));
   }

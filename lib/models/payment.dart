@@ -6,7 +6,7 @@ class Payment with ChangeNotifier {
   final String namePayment;
   final double amount;
   final double budget;
-  final String date;
+  final DateTime date;
   final int nDays;
   final int nSubscriptions;
   bool autoPaid;

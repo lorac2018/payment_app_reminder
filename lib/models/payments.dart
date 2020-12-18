@@ -67,18 +67,19 @@ class Payments with ChangeNotifier {
   double leftToPayAmount(Payment payment) {
     DateTime now = DateTime.now();
 
-    DateTime convertDate = DateTime.parse(payment.date);
+    //DateTime convertDate = DateTime.parse(payment.date);
 
     //Verifica se é uma subscrição, se sim, verifica se ainda não foi cobrado, associando o valor. Se for cobrado, não conta
     if (payment.autoPaid == true) {
       //Verifica a data
 
-      if (convertDate.isBefore(now)) {
+      /* if (convertDate.isBefore(now)) {
         return payment.amount;
       } else
         return null;
     } else
-      return payment.amount;
+      return payment.amount;*/
+    }
   }
 
   /*Fetch all info about the payments from the (firebase) database*/
@@ -109,6 +110,7 @@ class Payments with ChangeNotifier {
   Future<void> addPayment(Payment payment) async {
     const url =
         'https://paymentreminderapp2-default-rtdb.firebaseio.com/payments.json';
+
     try {
       final response = await http.post(
         url,
@@ -116,7 +118,7 @@ class Payments with ChangeNotifier {
           'name_payment': payment.namePayment,
           'amount': payment.amount,
           'budget': payment.budget,
-          'date': payment.date,
+          'date': payment.date.toIso8601String(),
           'autopaid': payment.autoPaid,
           'userId': FirebaseAuth.instance.currentUser.uid,
         }),
@@ -182,10 +184,12 @@ class Payments with ChangeNotifier {
   Future<void> fetchPaymentsByUserId() async {
     var url =
         'https://paymentreminderapp2-default-rtdb.firebaseio.com/payments.json?orderBy="userId"&equalTo="$userId"';
+
     try {
       final response = await http.get(url);
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
       print(extractedData);
+
       if (extractedData == null) {
         return;
       }
@@ -196,7 +200,7 @@ class Payments with ChangeNotifier {
           namePayment: data['name_payment'],
           amount: data['amount'],
           budget: data['budget'],
-          date: data['date'],
+          date: DateTime.parse(data['date']),
           autoPaid: data['autopaid'],
         ));
       });

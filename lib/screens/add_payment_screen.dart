@@ -21,15 +21,14 @@ class _NewPaymentScreenState extends State<NewPaymentScreen> {
   final _dateFocusNode = FocusNode();
   final _data = GlobalKey<FormState>();
   DateTime _selectedDate;
-  String _displayDate;
   bool _isSubscription = false;
-  bool _status = false;
 
   var _addPayment = Payment(
     id: null,
     namePayment: '',
     amount: 0,
     date: null,
+    autoPaid: false,
   );
   var _initValues = {
     'namePayment': '',
@@ -101,6 +100,7 @@ class _NewPaymentScreenState extends State<NewPaymentScreen> {
       print(_addPayment.date);
       print(_addPayment.amount);
       print(_addPayment.id.toString());
+      print(_addPayment.autoPaid);
     } catch (error) {
       await showDialog(
           context: context,
@@ -185,7 +185,6 @@ class _NewPaymentScreenState extends State<NewPaymentScreen> {
                               id: _addPayment.id,
                             );
                           }),
-                      Container(height: 30),
                       //Date
                       Container(height: 30),
                       ListTile(
@@ -212,12 +211,10 @@ class _NewPaymentScreenState extends State<NewPaymentScreen> {
                       TextFormField(
                           enabled: false,
                           onSaved: (value) {
-                            _displayDate =
-                                DateFormat('yyyy-MM-dd').format(_selectedDate);
                             _addPayment = Payment(
                               namePayment: _addPayment.namePayment,
                               amount: _addPayment.amount,
-                              date: _displayDate,
+                              date: _selectedDate,
                               autoPaid: _addPayment.autoPaid,
                               id: _addPayment.id,
                             );

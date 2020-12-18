@@ -56,7 +56,7 @@ class _EditPaymentScreenState extends State<EditPaymentScreen> {
         _initValues = {
           'namePayment': _editedPayment.namePayment,
           'amount': _editedPayment.amount.toString(),
-          'date': _editedPayment.date.toString(),
+          'date': _editedPayment.date,
           'autoPaid': _editedPayment.autoPaid.toString(),
           'id': _editedPayment.id,
         };
@@ -208,7 +208,7 @@ class _EditPaymentScreenState extends State<EditPaymentScreen> {
                           _editedPayment = Payment(
                             namePayment: _editedPayment.namePayment,
                             amount: _editedPayment.amount,
-                            date: _displayDate,
+                            date: _selectedDate,//_displayDate.toString(),
                             autoPaid: _editedPayment.autoPaid,
                             id: _editedPayment.id,
                           );

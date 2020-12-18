@@ -7,6 +7,7 @@ import '../screens/subscription_screen.dart';
 import '../models/payments.dart';
 import 'package:provider/provider.dart';
 import '../screens/notifications_screen.dart';
+import 'package:intl/intl.dart';
 
 class PaymentDetailScreen extends StatelessWidget {
   //final String title;
@@ -25,6 +26,8 @@ class PaymentDetailScreen extends StatelessWidget {
         ModalRoute.of(context).settings.arguments as String; //the id
     final payments = Provider.of<Payments>(context).findById(paymentId);
     final payment = Provider.of<Payments>(context);
+
+    String formattedDate = DateFormat('yyyy-MM-dd').format(payments.date);
 
     return Scaffold(
         appBar: AppBar(
@@ -99,7 +102,7 @@ class PaymentDetailScreen extends StatelessWidget {
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
                       color: Theme.of(context).primaryColor)),
-              trailing: Text(payments.date,
+              trailing: Text(formattedDate,
                   textAlign: TextAlign.end,
                   style: TextStyle(
                       fontSize: 15,
@@ -155,8 +158,7 @@ class PaymentDetailScreen extends StatelessWidget {
                 }),
             Divider(thickness: 1),
             ListTile(
-                leading: Icon(Icons.notification_important,
-                    textDirection: TextDirection.ltr),
+                leading: Icon(Icons.notification_important),
                 title: Text('Notifications',
                     textAlign: TextAlign.justify,
                     style: TextStyle(
@@ -196,7 +198,7 @@ class PaymentDetailScreen extends StatelessWidget {
                 ])),
             ListTile(
               leading:
-                  Icon(Icons.pending_actions, textDirection: TextDirection.ltr),
+                  Icon(Icons.pending_actions),
               title: Text('Operations Manager',
                   textAlign: TextAlign.justify,
                   style: TextStyle(
