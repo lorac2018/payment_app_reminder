@@ -124,7 +124,7 @@ class LocalNotifyManager {
   }
 
   Future<void> showDailyAtTimeNotification(String title, String body) async {
-    var time = Time(15, 50, 0);
+    var time = Time(14, 03, 0);
     var androidChannel = AndroidNotificationDetails(
       'CHANNEL_ID',
       'CHANNEL_NAME',
@@ -138,7 +138,7 @@ class LocalNotifyManager {
     var platformChannel = NotificationDetails(androidChannel, iosChannel);
     await flutterLocalNotificationsPlugin.showDailyAtTime(
       0,
-      'Daily Reminder about $title + ${time.hour}-${time.minute}-${time.second}',
+      'Daily Reminder about $title',
       'You will be charged $body soon',
       time,
       platformChannel,

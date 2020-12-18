@@ -20,10 +20,7 @@ class _EditPaymentScreenState extends State<EditPaymentScreen> {
   final _dateFocusNode = FocusNode();
   final _data = GlobalKey<FormState>();
   DateTime _selectedDate;
-  String _displayDate;
   bool _isSubscription = false;
-  bool _status = false;
-
   var _editedPayment = Payment(
     id: null,
     namePayment: '',
@@ -203,12 +200,10 @@ class _EditPaymentScreenState extends State<EditPaymentScreen> {
                     TextFormField(
                         enabled: false,
                         onSaved: (value) {
-                          _displayDate =
-                              DateFormat('yyyy-MM-dd').format(_selectedDate);
                           _editedPayment = Payment(
                             namePayment: _editedPayment.namePayment,
                             amount: _editedPayment.amount,
-                            date: _selectedDate,//_displayDate.toString(),
+                            date: _selectedDate,
                             autoPaid: _editedPayment.autoPaid,
                             id: _editedPayment.id,
                           );

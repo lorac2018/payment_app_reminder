@@ -6,16 +6,6 @@ import 'package:provider/provider.dart';
 import '../screens/payment_detail_screen.dart';
 
 class PaymentsItem extends StatelessWidget {
-  /*final String id;
-  final String namePayment;
-  final double amount;
-
-  PaymentsItem(
-    this.id,
-    this.namePayment,
-    this.amount,
-  );*/
-
   @override
   Widget build(BuildContext context) {
     var payment = Provider.of<Payment>(context);
@@ -26,9 +16,7 @@ class PaymentsItem extends StatelessWidget {
           Container(
               margin: EdgeInsets.all(10),
               padding: EdgeInsets.all(10),
-              child: Text(
-                  /*'£' + amount.toStringAsFixed(2),*/
-                  '£' + payment.amount.toStringAsFixed(2),
+              child: Text('£' + payment.amount.toStringAsFixed(2),
                   textAlign: TextAlign.justify,
                   style: TextStyle(
                       fontSize: 15,
@@ -42,6 +30,10 @@ class PaymentsItem extends StatelessWidget {
                     fontWeight: FontWeight.normal,
                     color: Theme.of(context).backgroundColor))
           ]),
+          Divider(
+            thickness: 3,
+            height: 30,
+          ),
           Column(children: [
             IconButton(
                 icon: Icon(Icons.info, color: Theme.of(context).primaryColor),

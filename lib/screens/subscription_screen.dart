@@ -1,4 +1,3 @@
-/*Used to provide information about the subscription and the visualization of data like charts*/
 
 import 'package:flutter/material.dart';
 import '../models/payments.dart';
@@ -17,10 +16,14 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
   Widget build(BuildContext context) {
     final paymentId =
         ModalRoute.of(context).settings.arguments as String; //the id
-    var payments = Provider.of<Payments>(context).findById(paymentId);
+
+    var paymentName = Provider.of<Payments>(context).findById(paymentId);
+    var payments = Provider.of<Payments>(context).nSubscriptions(paymentId);
+
+
     return Scaffold(
         appBar: AppBar(
-          title: Text(payments.namePayment),
+          title: Text(paymentName.namePayment),
         ),
         body: ListView(children: [
           Card(
@@ -34,7 +37,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
                           color: Theme.of(context).primaryColor)),
-                  trailing: Text(payments.nSubscriptions.toString(),
+                  trailing: Text(payments.toString(),
                       textAlign: TextAlign.justify,
                       style: TextStyle(
                           fontSize: 15,

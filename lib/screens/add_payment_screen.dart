@@ -28,12 +28,14 @@ class _NewPaymentScreenState extends State<NewPaymentScreen> {
     namePayment: '',
     amount: 0,
     date: null,
+    nSubscriptions: 0,
     autoPaid: false,
   );
   var _initValues = {
     'namePayment': '',
     'amount': '',
     'date': '',
+    'nSubscriptions': '',
     'autoPaid': '',
   };
   var _isInit = true;
@@ -56,6 +58,7 @@ class _NewPaymentScreenState extends State<NewPaymentScreen> {
           'namePayment': _addPayment.namePayment,
           'amount': _addPayment.amount.toString(),
           'date': _addPayment.date.toString(),
+          'nSubscriptions': _addPayment.nSubscriptions.toString(),
           'autoPaid': _addPayment.autoPaid.toString(),
         };
       }
@@ -88,6 +91,7 @@ class _NewPaymentScreenState extends State<NewPaymentScreen> {
       });
     });
   }
+
 
   Future<void> _submitData() async {
     //_data.currentState.validate();
@@ -136,7 +140,7 @@ class _NewPaymentScreenState extends State<NewPaymentScreen> {
                           textInputAction: TextInputAction.next,
                           onFieldSubmitted: (_) {
                             FocusScope.of(context)
-                                .requestFocus(_namePaymentFocusNode);
+                                .requestFocus(_amountFocusNode);
                           },
                           validator: (value) {
                             if (value.isEmpty) {

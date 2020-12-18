@@ -8,7 +8,7 @@ class Payment with ChangeNotifier {
   final double budget;
   final DateTime date;
   final int nDays;
-  final int nSubscriptions;
+  int nSubscriptions;
   bool autoPaid;
   bool notification;
 

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 import '../screens/delete_payment_screen.dart';
 import '../screens/edit_payment_screen.dart';
-import '../screens/subscription_screen.dart';
+import '../screens/graph_screen.dart';
 import '../models/payments.dart';
 import 'package:provider/provider.dart';
 import '../screens/notifications_screen.dart';
@@ -43,8 +43,8 @@ class PaymentDetailScreen extends StatelessWidget {
                         margin: EdgeInsets.all(10),
                         padding: EdgeInsets.all(2),
                         child: Text(
-                            'Balance: £' +
-                                payment.overSpentAmount.toStringAsFixed(2),
+                            'Total Spent: £' +
+                                payment.totalSpending.toStringAsFixed(2),
                             textAlign: TextAlign.justify,
                             style: TextStyle(
                                 fontSize: 15,
@@ -56,7 +56,9 @@ class PaymentDetailScreen extends StatelessWidget {
                         child: Text(
                             'Paid: ' +
                                 '£' +
-                                payment.totalSpending.toStringAsFixed(2),
+                                payment
+                                    .totalAmountByProduct(paymentId)
+                                    .toStringAsFixed(2),
                             textAlign: TextAlign.justify,
                             style: TextStyle(
                                 fontSize: 15,
@@ -67,7 +69,9 @@ class PaymentDetailScreen extends StatelessWidget {
                         child: Text(
                             'Due: ' +
                                 '£' +
-                                payment.leftToPayAmount(payments).toString(),
+                                payment
+                                    .leftToPayAmount(payments)
+                                    .toStringAsFixed(2),
                             textAlign: TextAlign.justify,
                             style: TextStyle(
                               fontSize: 15,
@@ -75,41 +79,34 @@ class PaymentDetailScreen extends StatelessWidget {
                               color: Theme.of(context).backgroundColor,
                             )))
                   ])),
-          Container(height: 10),
-          ListTile(
-              leading: Icon(Icons.attach_money),
-              title: Text(
-                'Payment Due',
-                textAlign: TextAlign.justify,
-                style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).primaryColor),
-              ),
-              trailing: Text('\£${payments.amount}',
-                  textAlign: TextAlign.end,
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).backgroundColor,
-                  ))),
-          Container(height: 10),
-          ListTile(
-              leading: Icon(Icons.date_range),
-              title: Text('Due Date',
-                  textAlign: TextAlign.justify,
-                  style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).primaryColor)),
-              trailing: Text(formattedDate,
-                  textAlign: TextAlign.end,
-                  style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).backgroundColor))),
-          Container(height: 10),
+          Divider(
+            thickness: 0.5,
+          ),
           Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            ListTile(
+                title: Text('More Info',
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).backgroundColor))),
+            ListTile(
+                leading: Icon(Icons.date_range),
+                title: Text('Due Date',
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).primaryColor)),
+                trailing: Text(formattedDate,
+                    textAlign: TextAlign.end,
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).backgroundColor))),
+            Container(
+              height: 20,
+            ),
             ListTile(
                 leading: Icon(Icons.payment),
                 title: Text('Auto-paid',
@@ -129,40 +126,33 @@ class PaymentDetailScreen extends StatelessWidget {
                     onChanged: (bool position) {
                       payments.autoPaid = position;
                     })),
+            Container(height: 20),
+            Card(
+                child: ListTile(
+              leading: Icon(Icons.insert_chart),
+              title: Text('Data Visualization',
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).primaryColor)),
+              trailing: Text('Press here',
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).backgroundColor)),
+              onTap: () {
+                Navigator.of(context).pushNamed(ChartScreen.routeName);
+              },
+            )),
+            Divider(thickness: 1),
             Container(height: 10),
             ListTile(
-                leading: Icon(
-                  Icons.subscriptions,
-                ),
-                title: Text('Total Spent',
-                    style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).primaryColor)),
-                trailing: Text(
-                    //if subscription == true then shows the value of the subscription if not shows only the total amount of the payment
-                    payments.autoPaid == true
-                        ? '£' +
-                            payment
-                                .totalAmountByProduct(paymentId)
-                                .toStringAsFixed(2)
-                        : payments.amount.toString(),
-                    textAlign: TextAlign.end,
-                    style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).backgroundColor)),
-                onTap: () {
-                  Navigator.of(context).pushNamed(SubscriptionScreen.routeName,
-                      arguments: payments.id);
-                }),
-            Divider(thickness: 1),
-            ListTile(
-                leading: Icon(Icons.notification_important),
                 title: Text('Notifications',
                     textAlign: TextAlign.justify,
                     style: TextStyle(
-                        fontSize: 15,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context).backgroundColor))),
             Card(
@@ -170,9 +160,9 @@ class PaymentDetailScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                   ListTile(
-                      trailing: Icon(Icons.notifications_active),
+                      leading: Icon(Icons.notifications_active),
                       title: Text('Manage Notification',
-                          textAlign: TextAlign.right,
+                          textAlign: TextAlign.left,
                           style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
@@ -183,7 +173,9 @@ class PaymentDetailScreen extends StatelessWidget {
                             arguments: paymentId);
                       }),
                   ListTile(
-                      trailing: Icon(Icons.cancel_schedule_send_outlined),
+                      trailing: Icon(
+                        Icons.cancel_schedule_send_outlined,
+                      ),
                       title: Text('Cancel Notification',
                           textAlign: TextAlign.right,
                           style: TextStyle(
@@ -196,13 +188,13 @@ class PaymentDetailScreen extends StatelessWidget {
                         //arguments: paymentId);
                       }),
                 ])),
+            Divider(thickness: 1),
+            Container(height: 10),
             ListTile(
-              leading:
-                  Icon(Icons.pending_actions),
               title: Text('Operations Manager',
                   textAlign: TextAlign.justify,
                   style: TextStyle(
-                      fontSize: 15,
+                      fontSize: 20,
                       fontWeight: FontWeight.bold,
                       color: Theme.of(context).backgroundColor)),
             ),
@@ -218,7 +210,10 @@ class PaymentDetailScreen extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                             color: Theme.of(context).primaryColor)),
                     IconButton(
-                      icon: Icon(Icons.edit),
+                      icon: Icon(
+                        Icons.edit,
+                        color: Colors.grey,
+                      ),
                       onPressed: () {
                         Navigator.of(context).pushNamed(
                           EditPaymentScreen.routeName,
@@ -236,7 +231,7 @@ class PaymentDetailScreen extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                               color: Theme.of(context).primaryColor)),
                       IconButton(
-                        icon: Icon(Icons.delete),
+                        icon: Icon(Icons.delete, color: Colors.grey),
                         onPressed: () {
                           Navigator.of(context).pushNamed(
                               DeletePaymentScreen.routeName,

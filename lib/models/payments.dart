@@ -24,34 +24,26 @@ class Payments with ChangeNotifier {
 //Função que calcula quanto já gastou naquela subscrição
   double totalAmountByProduct(String fetchedId) {
     var paymentId = findById(fetchedId);
-    return paymentId.amount;
-    /*return paymentId.amount * paymentId.n_subscriptions;*/
-  }
 
-// return the number of subscriptions
-  int numberOfSubscriptions(String paymentId) {
-    var fetchedId = findById(paymentId);
-    return fetchedId.nSubscriptions;
+    if (paymentId.autoPaid == true) {
+      return paymentId.amount * paymentId.nSubscriptions;
+    } else
+      return paymentId.amount;
   }
 
 //Função que efetua o cálculo de quantas subscrições já subscreveu
   int nSubscriptions(String fetchedId) {
-    //Primeiro, faz a diferença entre a data atual e a data de subscrição e verifica se (já) foi cobrado
-    // Se sim, faz a contagem
-    // Se não, break
-    return 10;
-  }
+    var paymentId = findById(fetchedId);
 
-//Função que calcula quanto já gastou do orçamento fornecido
-//Diferença entre o valor balance e a funcao total_spending
-  double get overSpentAmount {
-    var balance = 0.0;
+    DateTime nextMonth = paymentId.date.add(Duration(days: 30));
+    DateTime date = paymentId.date;
 
-    /* _payments.forEach((element) {
-      balance = element.budget;
-    });*/
-    //return totalSpending - balance;
-    return balance;
+    //If data > 30 dias, conta a subscrição
+    if (date.isAfter(nextMonth) && nextMonth.isAfter(DateTime.now())) {
+      paymentId.nSubscriptions = paymentId.nSubscriptions + 1;
+    }
+    return paymentId.nSubscriptions;
+    return 0;
   }
 
 //Função que calcula quanto já gastou, no total.
@@ -65,21 +57,20 @@ class Payments with ChangeNotifier {
 
 //Função que calcula o que falta pagar de todas as subscrições associadas ao id daquele pagamento
   double leftToPayAmount(Payment payment) {
-    DateTime now = DateTime.now();
+    //30 dias
+    DateTime nextMonth = payment.date.add(Duration(days: 30));
+    DateTime date = payment.date;
 
-    //DateTime convertDate = DateTime.parse(payment.date);
-
-    //Verifica se é uma subscrição, se sim, verifica se ainda não foi cobrado, associando o valor. Se for cobrado, não conta
     if (payment.autoPaid == true) {
-      //Verifica a data
-
-      /* if (convertDate.isBefore(now)) {
+      if (date.isBefore(nextMonth) && date.isBefore(DateTime.now())) {
+        //Ainda nao fez os 30 dias
         return payment.amount;
-      } else
-        return null;
-    } else
-      return payment.amount;*/
+      } else {
+        //já fez os 30 dias
+        return 0.0;
+      }
     }
+    return 0.0;
   }
 
   /*Fetch all info about the payments from the (firebase) database*/
@@ -96,6 +87,7 @@ class Payments with ChangeNotifier {
           namePayment: data['name_payment'],
           amount: data['amount'],
           budget: data['budget'],
+          nSubscriptions: data['nSubscriptions'],
           date: data['date'],
           autoPaid: data['autopaid'],
         ));
@@ -118,6 +110,7 @@ class Payments with ChangeNotifier {
           'name_payment': payment.namePayment,
           'amount': payment.amount,
           'budget': payment.budget,
+          'nSubscriptions': 1,
           'date': payment.date.toIso8601String(),
           'autopaid': payment.autoPaid,
           'userId': FirebaseAuth.instance.currentUser.uid,
@@ -127,6 +120,7 @@ class Payments with ChangeNotifier {
         namePayment: payment.namePayment,
         amount: payment.amount,
         budget: payment.budget,
+        nSubscriptions: payment.nSubscriptions,
         date: payment.date,
         autoPaid: payment.autoPaid,
         id: json.decode(response.body)['name'],
@@ -150,7 +144,7 @@ class Payments with ChangeNotifier {
             'name_payment': newPayment.namePayment,
             'amount': newPayment.amount,
             'budget': newPayment.budget,
-            'date': newPayment.date,
+            'date': newPayment.date.toIso8601String(),
             'autopaid': newPayment.autoPaid,
           }));
       _payments[paymentIndex] = newPayment;
@@ -200,6 +194,7 @@ class Payments with ChangeNotifier {
           namePayment: data['name_payment'],
           amount: data['amount'],
           budget: data['budget'],
+          nSubscriptions: data['nSubscriptions'],
           date: DateTime.parse(data['date']),
           autoPaid: data['autopaid'],
         ));
