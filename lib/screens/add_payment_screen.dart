@@ -92,7 +92,6 @@ class _NewPaymentScreenState extends State<NewPaymentScreen> {
     });
   }
 
-
   Future<void> _submitData() async {
     //_data.currentState.validate();
     _data.currentState.save();
@@ -133,7 +132,6 @@ class _NewPaymentScreenState extends State<NewPaymentScreen> {
                 child: ListView(
                     padding: const EdgeInsets.all(10),
                     children: <Widget>[
-                      //Title
                       TextFormField(
                           initialValue: _initValues['namePayment'],
                           decoration: InputDecoration(labelText: 'Title'),
@@ -157,7 +155,7 @@ class _NewPaymentScreenState extends State<NewPaymentScreen> {
                               id: _addPayment.id,
                             );
                           }),
-                      Container(height: 10, width: 10),
+                      Container(height: 20, width: 10),
                       TextFormField(
                           initialValue: _initValues['amount'],
                           decoration: InputDecoration(labelText: 'Amount'),
@@ -195,7 +193,7 @@ class _NewPaymentScreenState extends State<NewPaymentScreen> {
                           leading: Icon(Icons.date_range),
                           title: GestureDetector(
                               child: Text('Data of purchase',
-                                  textAlign: TextAlign.justify,
+                                  textAlign: TextAlign.start,
                                   style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold,
@@ -203,10 +201,11 @@ class _NewPaymentScreenState extends State<NewPaymentScreen> {
                               onTap: () {
                                 _presentDatePicker();
                               }),
-                          trailing: Text(
+                          subtitle: Text(
                             _selectedDate == null
                                 ? 'No Date entered!'
                                 : '${DateFormat.yMd().format(_selectedDate)}',
+                            textAlign: TextAlign.right,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 15,
@@ -214,6 +213,14 @@ class _NewPaymentScreenState extends State<NewPaymentScreen> {
                           )),
                       TextFormField(
                           enabled: false,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            disabledBorder: InputBorder.none,
+                            contentPadding: EdgeInsets.only(
+                                left: 15, bottom: 11, top: 11, right: 15),
+                          ),
                           onSaved: (value) {
                             _addPayment = Payment(
                               namePayment: _addPayment.namePayment,
@@ -223,8 +230,6 @@ class _NewPaymentScreenState extends State<NewPaymentScreen> {
                               id: _addPayment.id,
                             );
                           }),
-                      Container(height: 10, width: 10),
-                      SizedBox(height: 20, width: 10),
                       ListTile(
                           leading: Icon(Icons.subscriptions),
                           title: Text('Is a subscription?',
@@ -261,7 +266,7 @@ class _NewPaymentScreenState extends State<NewPaymentScreen> {
                                       id: _addPayment.id,
                                     );
                                   }))),
-                      SizedBox(height: 20, width: 10),
+                      Container(height: 30,),
                       RaisedButton(
                           child: Text('Add Payment',
                               textAlign: TextAlign.justify,
