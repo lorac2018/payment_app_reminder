@@ -178,7 +178,7 @@ class _EditPaymentScreenState extends State<EditPaymentScreen> {
                         title: GestureDetector(
                             child: Text(
                               'Data of purchase',
-                              textAlign: TextAlign.justify,
+                              textAlign: TextAlign.left,
                               style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.bold,
@@ -188,7 +188,7 @@ class _EditPaymentScreenState extends State<EditPaymentScreen> {
                             onTap: () {
                               _presentDatePicker();
                             }),
-                        trailing: Text(
+                        subtitle: Text(
                             _selectedDate == null
                                 ? 'No Date entered!'
                                 : '${DateFormat.yMd().format(_selectedDate)}',
@@ -199,6 +199,14 @@ class _EditPaymentScreenState extends State<EditPaymentScreen> {
                             ))),
                     TextFormField(
                         enabled: false,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          disabledBorder: InputBorder.none,
+                          contentPadding: EdgeInsets.only(
+                              left: 15, bottom: 11, top: 11, right: 15),
+                        ),
                         onSaved: (value) {
                           _editedPayment = Payment(
                             namePayment: _editedPayment.namePayment,
@@ -208,8 +216,6 @@ class _EditPaymentScreenState extends State<EditPaymentScreen> {
                             id: _editedPayment.id,
                           );
                         }),
-                    Container(height: 10, width: 10),
-                    SizedBox(height: 20, width: 10),
                     ListTile(
                         leading: Icon(Icons.subscriptions),
                         title: Text('Is a subscription?',
@@ -246,7 +252,7 @@ class _EditPaymentScreenState extends State<EditPaymentScreen> {
                                       autoPaid: _editedPayment.autoPaid,
                                       id: _editedPayment.id);
                                 }))),
-                    SizedBox(width: 10, height: 20),
+                    Container(height: 30,),
                     RaisedButton(
                         child: Text(
                           'Edit Payment',
