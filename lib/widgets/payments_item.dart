@@ -10,43 +10,40 @@ class PaymentsItem extends StatelessWidget {
   Widget build(BuildContext context) {
     var payment = Provider.of<Payment>(context);
     return Card(
-        child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-          Container(
-              margin: EdgeInsets.all(10),
-              padding: EdgeInsets.all(10),
-              child: Text('£' + payment.amount.toStringAsFixed(2),
-                  textAlign: TextAlign.justify,
-                  style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).primaryColor))),
-          Column(children: <Widget>[
-            Text(payment.namePayment,
-                textAlign: TextAlign.justify,
-                style: TextStyle(
-                    fontSize: 17.50,
-                    fontWeight: FontWeight.normal,
-                    color: Theme.of(context).backgroundColor))
-          ]),
-          Divider(
-            thickness: 3,
-            height: 30,
+      elevation: 15.0,
+      margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5.0),
+      child: Container(
+        child: ListTile(
+          contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          leading: Container(
+              padding: EdgeInsets.only(right: 12),
+              decoration: BoxDecoration(
+                  border: Border(
+                      right: BorderSide(width: 1.0, color: Colors.white))),
+              child: Icon(Icons.adjust, color: Theme.of(context).primaryColor)),
+          title: Text(
+            payment.namePayment,
+            style: TextStyle(
+                color: Theme.of(context).primaryColor,
+                fontSize: 17,
+                fontWeight: FontWeight.bold),
           ),
-          Column(children: [
-            IconButton(
-                icon: Icon(Icons.info, color: Theme.of(context).primaryColor),
-                onPressed: () {
-                  Navigator.of(context).pushNamed(PaymentDetailScreen.routeName,
-                      arguments: payment.id);
-                }),
-            IconButton(
-              icon: Icon(Icons.account_balance_wallet,
-                  color: Theme.of(context).buttonColor),
-              onPressed: () {},
-            ),
+          subtitle: Row(children: [
+            Icon(Icons.padding, color: Colors.grey),
+            Text(
+              '£' + payment.amount.toStringAsFixed(2),
+              style: TextStyle(
+                  color: Theme.of(context).primaryColor, fontSize: 15),
+            )
           ]),
-        ]));
+          trailing: Icon(Icons.keyboard_arrow_right,
+              color: Theme.of(context).primaryColor, size: 30.0),
+          onTap: () {
+            Navigator.of(context).pushNamed(PaymentDetailScreen.routeName,
+                arguments: payment.id);
+          },
+        ),
+      ),
+    );
   }
 }

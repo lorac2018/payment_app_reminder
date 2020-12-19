@@ -43,7 +43,7 @@ class PaymentDetailScreen extends StatelessWidget {
                         margin: EdgeInsets.all(10),
                         padding: EdgeInsets.all(2),
                         child: Text(
-                            'Total Spent: £' +
+                            'Total: £' +
                                 payment.totalSpending.toStringAsFixed(2),
                             textAlign: TextAlign.justify,
                             style: TextStyle(
@@ -105,7 +105,7 @@ class PaymentDetailScreen extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context).backgroundColor))),
             Container(
-              height: 20,
+              height: 5,
             ),
             ListTile(
                 leading: Icon(Icons.payment),
@@ -126,7 +126,7 @@ class PaymentDetailScreen extends StatelessWidget {
                     onChanged: (bool position) {
                       payments.autoPaid = position;
                     })),
-            Container(height: 20),
+            Container(height: 5),
             Card(
                 child: ListTile(
               leading: Icon(Icons.insert_chart),
@@ -147,7 +147,26 @@ class PaymentDetailScreen extends StatelessWidget {
               },
             )),
             Divider(thickness: 1),
-            Container(height: 10),
+            Card(
+                child: ListTile(
+                  leading: Icon(Icons.receipt),
+                  title: Text('Recipts',
+                      textAlign: TextAlign.justify,
+                      style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).primaryColor)),
+                  trailing: Text('Press here',
+                      textAlign: TextAlign.justify,
+                      style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).backgroundColor)),
+                  onTap: () {
+                   // Navigator.of(context).pushNamed(ChartScreen.routeName);
+                  },
+                )),
+            Divider(thickness: 1),
             ListTile(
                 title: Text('Notifications',
                     textAlign: TextAlign.justify,
@@ -189,7 +208,6 @@ class PaymentDetailScreen extends StatelessWidget {
                       }),
                 ])),
             Divider(thickness: 1),
-            Container(height: 10),
             ListTile(
               title: Text('Operations Manager',
                   textAlign: TextAlign.justify,
