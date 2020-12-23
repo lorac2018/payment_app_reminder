@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
+
 
 //Model - One Single Payment
 class Payment with ChangeNotifier {
@@ -11,6 +13,7 @@ class Payment with ChangeNotifier {
   int nSubscriptions;
   bool autoPaid;
   bool notification;
+  final charts.Color barColor;
 
   Payment({
     @required this.id,
@@ -22,5 +25,6 @@ class Payment with ChangeNotifier {
     this.nSubscriptions,
     this.autoPaid = false,
     this.notification = false,
+    this.barColor,
   });
 }

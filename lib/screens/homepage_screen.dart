@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../screens/push_notifications_screen.dart';
 import '../screens/add_payment_screen.dart';
 import '../models/payments.dart';
 import '../screens/payments_screen.dart';
@@ -49,12 +48,6 @@ class _HomePageState extends State<HomePage> {
           ),
           centerTitle: true,
           actions: <Widget>[
-            IconButton(
-                icon: Icon(Icons.notifications_active),
-                onPressed: () {
-                  Navigator.of(context)
-                      .pushNamed(LocalPushNotifications.routeName);
-                }),
             IconButton(
               icon: Icon(Icons.add),
               onPressed: () {

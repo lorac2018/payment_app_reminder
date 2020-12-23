@@ -12,6 +12,7 @@ import 'screens/delete_payment_screen.dart';
 import 'models/payments.dart';
 import 'screens/tabs_screen.dart';
 import 'screens/homepage_screen.dart';
+import 'screens/graph_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
             accentColor: Color.fromRGBO(28, 45, 62, 1),
             errorColor: Colors.red,
             fontFamily: 'Quicksand'),
+        debugShowCheckedModeBanner:false,
         home: StreamBuilder(
             //Firestore.instance.collection('users').document(getUID()).snapshots(),
             stream: FirebaseAuth.instance.authStateChanges(),
@@ -57,7 +59,7 @@ class MyApp extends StatelessWidget {
           ManageNotifications.routeName: (ctx) => ManageNotifications(),
           EditPaymentScreen.routeName: (ctx) => EditPaymentScreen(),
           DeletePaymentScreen.routeName: (ctx) => DeletePaymentScreen(),
-
+          ChartScreen.routeName: (ctx) => ChartScreen()
         },
       ),
     );
