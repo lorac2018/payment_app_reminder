@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../models/payment.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 //We want more than one payment, we want to establish direct communication between this
 //widget and the inherited widgets associated, so we use Provider which has Change Notifier
@@ -12,6 +13,9 @@ import 'package:http/http.dart' as http;
 class Payments with ChangeNotifier {
   List<Payment> _payments = [];
   String userId = FirebaseAuth.instance.currentUser.uid;
+
+
+  DateTime dateLocal = DateTime.now();
 
   List<Payment> get itemsPayments {
     return [..._payments];
@@ -81,6 +85,7 @@ class Payments with ChangeNotifier {
       final response = await http.get(url);
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
       final List<Payment> loadedProducts = [];
+      loadedProducts.sort();
       extractedData.forEach((payId, data) {
         loadedProducts.add(Payment(
           id: payId,
@@ -176,9 +181,10 @@ class Payments with ChangeNotifier {
   }
 
   Future<void> fetchPaymentsByUserId() async {
+    final filterString = 'orderBy="date"&equalTo="$dateLocal"';
+
     var url =
         'https://paymentreminderapp2-default-rtdb.firebaseio.com/payments.json?orderBy="userId"&equalTo="$userId"';
-
     try {
       final response = await http.get(url);
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
@@ -198,6 +204,7 @@ class Payments with ChangeNotifier {
           date: DateTime.parse(data['date']),
           autoPaid: data['autopaid'],
         ));
+        loadedProducts.sort((data, data1) => data.date.compareTo(data1.date));
       });
       _payments = loadedProducts;
       notifyListeners();
@@ -205,4 +212,6 @@ class Payments with ChangeNotifier {
       throw (error);
     }
   }
+
+
 }

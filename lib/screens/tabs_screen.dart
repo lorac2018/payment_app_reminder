@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../screens/auth_screen.dart';
 import '../screens/homepage_screen.dart';
 import '../widgets/drawer.dart';
+import '../screens/graph_screen.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class TabsScreen extends StatefulWidget {
   @override
@@ -22,7 +24,7 @@ class _TabsScreenState extends State<TabsScreen> {
         'title': 'Payment App Reminder',
       },
       {
-        'page': AuthScreen(),
+        'page': ChartScreen(),
         'title': 'History',
       },
     ];
@@ -49,8 +51,8 @@ class _TabsScreenState extends State<TabsScreen> {
         currentIndex: _selectedPageIndex,
         type: BottomNavigationBarType.fixed,
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'home'),
-          BottomNavigationBarItem(icon: Icon(Icons.history), label: 'history'),
+          BottomNavigationBarItem(icon: Icon(FontAwesomeIcons.home), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(FontAwesomeIcons.solidChartBar), label: 'History'),
         ],
       ),
     );

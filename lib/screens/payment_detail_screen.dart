@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 import '../screens/delete_payment_screen.dart';
 import '../screens/edit_payment_screen.dart';
-import '../screens/graph_screen.dart';
+import '../screens/cancel_notification_screen.dart';
 import '../models/payments.dart';
 import 'package:provider/provider.dart';
 import '../screens/notifications_screen.dart';
@@ -127,10 +127,11 @@ class PaymentDetailScreen extends StatelessWidget {
                       payments.autoPaid = position;
                     })),
             Container(height: 5),
+            Divider(thickness: 1),
             Card(
                 child: ListTile(
-              leading: Icon(Icons.insert_chart),
-              title: Text('Data Visualization',
+              leading: Icon(Icons.receipt),
+              title: Text('Recipts',
                   textAlign: TextAlign.justify,
                   style: TextStyle(
                       fontSize: 15,
@@ -143,29 +144,9 @@ class PaymentDetailScreen extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       color: Theme.of(context).backgroundColor)),
               onTap: () {
-                Navigator.of(context).pushNamed(ChartScreen.routeName);
+                // Navigator.of(context).pushNamed(ChartScreen.routeName);
               },
             )),
-            Divider(thickness: 1),
-            Card(
-                child: ListTile(
-                  leading: Icon(Icons.receipt),
-                  title: Text('Recipts',
-                      textAlign: TextAlign.justify,
-                      style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).primaryColor)),
-                  trailing: Text('Press here',
-                      textAlign: TextAlign.justify,
-                      style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).backgroundColor)),
-                  onTap: () {
-                   // Navigator.of(context).pushNamed(ChartScreen.routeName);
-                  },
-                )),
             Divider(thickness: 1),
             ListTile(
                 title: Text('Notifications',
@@ -202,8 +183,8 @@ class PaymentDetailScreen extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                               color: Theme.of(context).primaryColor)),
                       onTap: () {
-                        //Navigator.of(context).pushNamed(
-                        //NotificationScreen.routename,
+                        Navigator.of(context).pushNamed(
+                        CancelNotification.routeName);
                         //arguments: paymentId);
                       }),
                 ])),

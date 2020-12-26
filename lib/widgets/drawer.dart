@@ -14,7 +14,6 @@ class MainDrawer extends StatelessWidget {
           text: 'Homepage',
           onTap: () =>
               Navigator.pushReplacementNamed(context, HomePage.routeName)),
-      _createDrawerItem(icon: Icons.history, text: 'History', onTap: () {}),
       _createDrawerItem(
           icon: Icons.exit_to_app,
           text: 'Logout',

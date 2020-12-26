@@ -13,7 +13,7 @@ class Payment with ChangeNotifier {
   int nSubscriptions;
   bool autoPaid;
   bool notification;
-  final charts.Color barColor;
+  final String colorVal;
 
   Payment({
     @required this.id,
@@ -25,6 +25,6 @@ class Payment with ChangeNotifier {
     this.nSubscriptions,
     this.autoPaid = false,
     this.notification = false,
-    this.barColor,
+    this.colorVal,
   });
 }
