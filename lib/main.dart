@@ -14,6 +14,7 @@ import 'screens/tabs_screen.dart';
 import 'screens/homepage_screen.dart';
 import 'screens/graph_screen.dart';
 import 'screens/cancel_notification_screen.dart';
+import 'screens/search_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -62,6 +63,7 @@ class MyApp extends StatelessWidget {
           DeletePaymentScreen.routeName: (ctx) => DeletePaymentScreen(),
           ChartScreen.routeName: (ctx) => ChartScreen(),
           CancelNotification.routeName: (ctx) => CancelNotification(),
+          SearchScreen.routeName: (ctx) => SearchScreen()
         },
       ),
     );
