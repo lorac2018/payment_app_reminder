@@ -12,7 +12,7 @@ class _AuthScreenState extends State<AuthScreen> {
   final _auth = FirebaseAuth.instance;
   var _isLoading = false;
 
-  void _submitAuthForm(
+  void submitAuthForm(
     String email,
     String password,
     String username,
@@ -73,7 +73,7 @@ class _AuthScreenState extends State<AuthScreen> {
     return Scaffold(
         backgroundColor: Theme.of(context).primaryColor,
         body: AuthForm(
-          _submitAuthForm,
+          submitAuthForm,
           _isLoading,
         ));
   }

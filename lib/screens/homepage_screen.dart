@@ -4,6 +4,7 @@ import '../models/payments.dart';
 import '../screens/payments_screen.dart';
 import '../widgets/drawer.dart';
 import 'package:provider/provider.dart';
+import '../screens/search_screen.dart';
 
 class HomePage extends StatefulWidget {
   static const routeName = '/homepage';
@@ -56,7 +57,9 @@ class _HomePageState extends State<HomePage> {
             ),
             IconButton(
               icon: Icon(Icons.search),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pushNamed(SearchScreen.routeName);
+              },
             ),
             // StatelessWidgetDemo(),
           ],

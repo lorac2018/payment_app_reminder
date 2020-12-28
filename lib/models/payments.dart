@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_reminder_payment/services/api.dart';
 import '../models/payment.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -13,12 +14,28 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 class Payments with ChangeNotifier {
   List<Payment> _payments = [];
   String userId = FirebaseAuth.instance.currentUser.uid;
-
+  API api = API();
 
   DateTime dateLocal = DateTime.now();
 
   List<Payment> get itemsPayments {
     return [..._payments];
+  }
+
+  /*API AND HTTP CLIENT FOR TESTING*/
+  var client = new http.Client();
+
+  Future<List<Payment>> getPayments() async {
+    var payments = List<Payment>();
+    var response = await client.get(
+        'https://paymentreminderapp2-default-rtdb.firebaseio.com/payments.json');
+
+    var data = json.decode(response.body) as List<dynamic>;
+
+    for (var payment in data) {
+      _payments.add(payment);
+    }
+    return payments;
   }
 
   Payment findById(String id) {
@@ -91,7 +108,6 @@ class Payments with ChangeNotifier {
           id: payId,
           namePayment: data['name_payment'],
           amount: data['amount'],
-          budget: data['budget'],
           nSubscriptions: data['nSubscriptions'],
           date: data['date'],
           autoPaid: data['autopaid'],
@@ -114,7 +130,6 @@ class Payments with ChangeNotifier {
         body: json.encode({
           'name_payment': payment.namePayment,
           'amount': payment.amount,
-          'budget': payment.budget,
           'nSubscriptions': 1,
           'date': payment.date.toIso8601String(),
           'autopaid': payment.autoPaid,
@@ -124,7 +139,6 @@ class Payments with ChangeNotifier {
       final newPayment = Payment(
         namePayment: payment.namePayment,
         amount: payment.amount,
-        budget: payment.budget,
         nSubscriptions: payment.nSubscriptions,
         date: payment.date,
         autoPaid: payment.autoPaid,
@@ -148,7 +162,6 @@ class Payments with ChangeNotifier {
           body: json.encode({
             'name_payment': newPayment.namePayment,
             'amount': newPayment.amount,
-            'budget': newPayment.budget,
             'date': newPayment.date.toIso8601String(),
             'autopaid': newPayment.autoPaid,
           }));
@@ -199,7 +212,6 @@ class Payments with ChangeNotifier {
           id: payId,
           namePayment: data['name_payment'],
           amount: data['amount'],
-          budget: data['budget'],
           nSubscriptions: data['nSubscriptions'],
           date: DateTime.parse(data['date']),
           autoPaid: data['autopaid'],
@@ -212,6 +224,4 @@ class Payments with ChangeNotifier {
       throw (error);
     }
   }
-
-
 }

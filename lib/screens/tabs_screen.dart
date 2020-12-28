@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../screens/auth_screen.dart';
 import '../screens/homepage_screen.dart';
 import '../widgets/drawer.dart';
 import '../screens/graph_screen.dart';

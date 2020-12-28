@@ -8,20 +8,14 @@ import '../models/payments.dart';
 import 'package:provider/provider.dart';
 import '../screens/notifications_screen.dart';
 import 'package:intl/intl.dart';
+import '../screens/recipt_screen.dart';
+
 
 class PaymentDetailScreen extends StatelessWidget {
-  //final String title;
-  //PaymentDetailScreen(this.title);
   static const routeName = '/payment-detail';
 
   @override
   Widget build(BuildContext context) {
-    //final routeArgs =
-    //ModalRoute.of(context).settings.arguments as Map<String, String>;
-    // final paymentTitle = routeArgs['title'];
-    //final paymentId = routeArgs['id'];
-    //final paymentautopaid = routeArgs['autopaid'];
-
     final paymentId =
         ModalRoute.of(context).settings.arguments as String; //the id
     final payments = Provider.of<Payments>(context).findById(paymentId);
@@ -144,7 +138,8 @@ class PaymentDetailScreen extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       color: Theme.of(context).backgroundColor)),
               onTap: () {
-                // Navigator.of(context).pushNamed(ChartScreen.routeName);
+                Navigator.of(context).pushNamed(
+                    ReciptScreen.routeName);
               },
             )),
             Divider(thickness: 1),
@@ -183,8 +178,8 @@ class PaymentDetailScreen extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                               color: Theme.of(context).primaryColor)),
                       onTap: () {
-                        Navigator.of(context).pushNamed(
-                        CancelNotification.routeName);
+                        Navigator.of(context)
+                            .pushNamed(CancelNotification.routeName);
                         //arguments: paymentId);
                       }),
                 ])),
@@ -199,7 +194,7 @@ class PaymentDetailScreen extends StatelessWidget {
             ),
             Card(
                 child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                   ButtonBar(children: [
                     Text('Edit Payment',
