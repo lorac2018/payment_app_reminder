@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import '../models/payment.dart';
 import '../models/payments.dart';
 import 'package:provider/provider.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class NewPaymentScreen extends StatefulWidget {
   static const routeName = '/add-payment';
