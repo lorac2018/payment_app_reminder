@@ -3,9 +3,10 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_reminder_payment/services/api.dart';
+import 'package:provider/provider.dart';
 import '../models/payment.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import '../services/locator.dart';
 
 //We want more than one payment, we want to establish direct communication between this
 //widget and the inherited widgets associated, so we use Provider which has Change Notifier
@@ -14,7 +15,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 class Payments with ChangeNotifier {
   List<Payment> _payments = [];
   String userId = FirebaseAuth.instance.currentUser.uid;
-  API api = API();
+  API api = locator<API>();
 
   DateTime dateLocal = DateTime.now();
 
@@ -22,21 +23,7 @@ class Payments with ChangeNotifier {
     return [..._payments];
   }
 
-  /*API AND HTTP CLIENT FOR TESTING*/
-  var client = new http.Client();
 
-  Future<List<Payment>> getPayments() async {
-    var payments = List<Payment>();
-    var response = await client.get(
-        'https://paymentreminderapp2-default-rtdb.firebaseio.com/payments.json');
-
-    var data = json.decode(response.body) as List<dynamic>;
-
-    for (var payment in data) {
-      _payments.add(payment);
-    }
-    return payments;
-  }
 
   Payment findById(String id) {
     return _payments.singleWhere((payment) => payment.id == id);

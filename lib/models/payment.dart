@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
-
 
 //Model - One Single Payment
 class Payment with ChangeNotifier {

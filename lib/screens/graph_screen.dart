@@ -5,7 +5,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import '../models/payments.dart';
 import '../models/payment.dart';
-import 'package:intl/intl.dart';
 
 class ChartScreen extends StatefulWidget {
   static const routeName = '/charts';

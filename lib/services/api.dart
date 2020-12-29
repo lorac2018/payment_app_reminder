@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import '../models/payments.dart';
 import '../models/payment.dart';
 
 class API {

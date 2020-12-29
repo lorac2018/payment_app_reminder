@@ -40,11 +40,6 @@ class _ManageNotificationsState extends State<ManageNotifications> {
         ModalRoute.of(context).settings.arguments as String; //the id
     final payments = Provider.of<Payments>(context).findById(paymentId);
 
-    _convertDateFromString(String strDate) {
-      DateTime todayDate = DateTime.parse(strDate);
-      print(todayDate);
-    }
-
     return Scaffold(
       appBar: AppBar(
         title: Text(payments.namePayment),

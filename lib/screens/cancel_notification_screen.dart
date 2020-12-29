@@ -32,8 +32,6 @@ class _CancelNotificationState extends State<CancelNotification> {
 
   @override
   Widget build(BuildContext context) {
-    final paymentId =
-        ModalRoute.of(context).settings.arguments as String; //the id
     return RichAlertDialog(
       alertTitle: Text("Cancel all Notifications?",
           style: TextStyle(
