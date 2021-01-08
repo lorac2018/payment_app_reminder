@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'local_notify_manager.dart';
+import '../widgets/local_notify_manager.dart';
 import 'ScreenSecond.dart';
 
 class LocalPushNotifications extends StatefulWidget {

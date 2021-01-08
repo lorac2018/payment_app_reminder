@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import './services/locator.dart';
 import './screens/notifications_screen.dart';
 import './screens/auth_screen.dart';
 import 'package:provider/provider.dart';
@@ -19,10 +18,7 @@ import 'screens/cancel_notification_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  setupLocator();
   runApp(MyApp());
-
-
 }
 
 class MyApp extends StatelessWidget {
@@ -45,7 +41,7 @@ class MyApp extends StatelessWidget {
             accentColor: Color.fromRGBO(28, 45, 62, 1),
             errorColor: Colors.red,
             fontFamily: 'Quicksand'),
-        debugShowCheckedModeBanner:false,
+        debugShowCheckedModeBanner: false,
         home: StreamBuilder(
             //Firestore.instance.collection('users').document(getUID()).snapshots(),
             stream: FirebaseAuth.instance.authStateChanges(),

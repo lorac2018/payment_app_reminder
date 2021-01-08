@@ -172,29 +172,40 @@ class LocalNotifyManager {
 
   Future<void> showNotificationCloseDateSubscription(
       String title, String body, DateTime date) async {
+    int twoDaysBefore = DateTime.now().day - date.day;
 
+    if (twoDaysBefore <= 2) {
+      var time = Time(14, 03, 0);
+      var androidChannel = AndroidNotificationDetails(
+        'CHANNEL_ID',
+        'CHANNEL_NAME',
+        'CHANNEL_DESCRIPTION',
+        importance: Importance.Max,
+        priority: Priority.High,
+        playSound: true,
+      );
+      /*final scheduledNotificationDateTime =
+      DateTime(date.year, date.month, date.day, 2);
+      var androidChannel = AndroidNotificationDetails(
+        'CHANNEL_ID',
+        'CHANNEL_NAME',
+        'CHANNEL_DESCRIPTION',
+        importance: Importance.Max,
+        priority: Priority.High,
+        playSound: true,
+      );
 
-    final scheduledNotificationDateTime =
-    DateTime(date.year, date.month, date.day, 6);
-    var androidChannel = AndroidNotificationDetails(
-      'CHANNEL_ID',
-      'CHANNEL_NAME',
-      'CHANNEL_DESCRIPTION',
-      importance: Importance.Max,
-      priority: Priority.High,
-      playSound: true,
-    );
-
-    var iosChannel = IOSNotificationDetails();
-    var platformChannel = NotificationDetails(androidChannel, iosChannel);
-    await flutterLocalNotificationsPlugin.schedule(
-      0,
-      'Reminder about $title',
-      'You will be charged $body today.',
-      scheduledNotificationDateTime,
-      platformChannel,
-      payload: 'New payload',
-    );
+      var iosChannel = IOSNotificationDetails();
+      var platformChannel = NotificationDetails(androidChannel, iosChannel);
+      await flutterLocalNotificationsPlugin.schedule(
+        0,
+        'Reminder about $title',
+        'You will be charged $body today.',
+        scheduledNotificationDateTime,
+        platformChannel,
+        payload: 'New payload',
+      );*/
+    }
   }
 
   Future<void> cancelNotification(int id) async {

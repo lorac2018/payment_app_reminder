@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'ScreenSecond.dart';
-import 'local_notify_manager.dart';
+import '../widgets/local_notify_manager.dart';
 import 'package:rich_alert/rich_alert.dart';
 import '../screens/homepage_screen.dart';
 

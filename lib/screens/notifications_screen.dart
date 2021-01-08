@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../models/payments.dart';
 import 'package:provider/provider.dart';
 import 'ScreenSecond.dart';
-import 'local_notify_manager.dart';
+import '../widgets/local_notify_manager.dart';
 
 class ManageNotifications extends StatefulWidget {
   static const routeName = '/managenotifications';
@@ -13,7 +13,6 @@ class ManageNotifications extends StatefulWidget {
 }
 
 class _ManageNotificationsState extends State<ManageNotifications> {
-  DateTime date;
 
   @override
   void initState() {
@@ -44,44 +43,75 @@ class _ManageNotificationsState extends State<ManageNotifications> {
       appBar: AppBar(
         title: Text(payments.namePayment),
       ),
-      body: Center(
-        child: Column(
-          children: [
-            RaisedButton(
-              color: Theme.of(context).buttonColor,
-              child: Text('Remind Me Daily'),
-              textColor: Colors.white,
-              onPressed: () async {
-                //await localNotifyManager.showNotification(payments.namePayment.toString(), payments.amount.toString());
-                //await localNotifyManager.scheduleNotification();
-                //await localNotifyManager.repeatNotification();
-                await localNotifyManager.showDailyAtTimeNotification(
-                    payments.namePayment.toString(),
-                    payments.amount.toString());
-              },
+      body: Column(
+        children: [
+          ListTile(
+            title: Text('Daily Notification',
+                textAlign: TextAlign.justify,
+                style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).backgroundColor)),
+            leading: Icon(Icons.notifications_active),
+            subtitle: Text('Remind Me Daily',
+                textAlign: TextAlign.justify,
+                style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).primaryColor)),
+            onTap: () async {
+              //await localNotifyManager.showNotification(payments.namePayment.toString(), payments.amount.toString());
+              //await localNotifyManager.scheduleNotification();
+              //await localNotifyManager.repeatNotification();
+              await localNotifyManager.showDailyAtTimeNotification(
+                  payments.namePayment.toString(), payments.amount.toString());
+            },
+          ),
+          Container(
+            height: 10,
+          ),
+          ListTile(
+            title: Text('Weekly Notification',
+                textAlign: TextAlign.justify,
+                style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).backgroundColor)),
+            leading: Icon(
+              Icons.notifications_active,
             ),
-            RaisedButton(
-              color: Theme.of(context).buttonColor,
-              child: Text('Remind me Weekly'),
-              textColor: Colors.white,
-              onPressed: () async {
-                await localNotifyManager.showWeeklyNotification(
-                    payments.namePayment.toString(),
-                    payments.amount.toString());
-              },
-            ),
-            RaisedButton(
-              child: Text('Remind Me Closest to the Day Pay'),
-              color: Theme.of(context).buttonColor,
-              textColor: Colors.white,
-              onPressed: () async {
-                //date = _convertDateFromString(payments.date);
-                await localNotifyManager.showNotificationCloseDateSubscription(
-                    payments.namePayment, payments.amount.toString(), date);
-              },
-            )
-          ],
-        ),
+            subtitle: Text('Remind Me Weekly',
+                textAlign: TextAlign.justify,
+                style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).primaryColor)),
+            onTap: () async {
+              await localNotifyManager.showWeeklyNotification(
+                  payments.namePayment.toString(), payments.amount.toString());
+            },
+          ),
+          Container(height: 10),
+          ListTile(
+            title: Text('Custom Notification',
+                textAlign: TextAlign.justify,
+                style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).backgroundColor)),
+            leading: Icon(Icons.notifications_active),
+            subtitle: Text('Remind Me Two Days Before',
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).primaryColor)),
+            onTap: () async {
+              await localNotifyManager.showNotificationCloseDateSubscription(
+                  payments.namePayment, payments.amount.toString(), payments.date);
+            },
+          ),
+        ],
       ),
     );
   }

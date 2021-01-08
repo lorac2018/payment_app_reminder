@@ -1,0 +1,68 @@
+{
+  "payments" : {
+    "-MOr7O9ByMHXL-V6FrsO" : {
+      "amount" : 10.99,
+      "autopaid" : true,
+      "date" : "2020-12-08T00:00:00.000",
+      "nSubscriptions" : 1,
+      "name_payment" : "Spotify\t",
+      "userId" : "5tKyZhjV45aAQyiZks5JREYrlx32"
+    },
+    "-MOrARHGXWHW6yh5g6fr" : {
+      "amount" : 25.2,
+      "autopaid" : true,
+      "date" : "2020-12-14T00:00:00.000",
+      "nSubscriptions" : 1,
+      "name_payment" : "Solinca",
+      "userId" : "5tKyZhjV45aAQyiZks5JREYrlx32"
+    },
+    "-MOsYwmUF_6orUau63Lh" : {
+      "amount" : 50.2,
+      "autopaid" : false,
+      "date" : "2020-10-28T00:00:00.000",
+      "nSubscriptions" : 1,
+      "name_payment" : "Sapatilhas Adidas\t",
+      "userId" : "5tKyZhjV45aAQyiZks5JREYrlx32"
+    },
+    "-MOsZifHfhCpF0EJNVe8" : {
+      "amount" : 30.3,
+      "autopaid" : false,
+      "date" : "2020-11-24T00:00:00.000",
+      "nSubscriptions" : 1,
+      "name_payment" : "Livro ML",
+      "userId" : "5tKyZhjV45aAQyiZks5JREYrlx32"
+    },
+    "-MOsZnvNvRVu1rUAjFVo" : {
+      "amount" : 2.0,
+      "autopaid" : false,
+      "date" : "2020-11-03T00:00:00.000",
+      "nSubscriptions" : 1,
+      "name_payment" : "Guarda Chuva",
+      "userId" : "5tKyZhjV45aAQyiZks5JREYrlx32"
+    },
+    "-MOsZtks0VNyfy63Afgw" : {
+      "amount" : 30.5,
+      "autopaid" : false,
+      "date" : "2020-12-20T00:00:00.000",
+      "nSubscriptions" : 1,
+      "name_payment" : "Mochila Estpark",
+      "userId" : "5tKyZhjV45aAQyiZks5JREYrlx32"
+    },
+    "-MOsZyfWW6PAVqAFymBu" : {
+      "amount" : 7.99,
+      "autopaid" : true,
+      "date" : "2020-12-18T00:00:00.000",
+      "nSubscriptions" : 1,
+      "name_payment" : "Netflix",
+      "userId" : "5tKyZhjV45aAQyiZks5JREYrlx32"
+    },
+    "-MPV473ht_Gr4C74H4QT" : {
+      "amount" : 200.0,
+      "autopaid" : false,
+      "date" : "2020-09-23T00:00:00.000",
+      "nSubscriptions" : 1,
+      "name_payment" : "Smartwatch",
+      "userId" : "5tKyZhjV45aAQyiZks5JREYrlx32"
+    }
+  }
+}

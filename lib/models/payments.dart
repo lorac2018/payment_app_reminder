@@ -2,28 +2,21 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_reminder_payment/services/api.dart';
-import 'package:provider/provider.dart';
 import '../models/payment.dart';
 import 'package:http/http.dart' as http;
-import '../services/locator.dart';
 
 //We want more than one payment, we want to establish direct communication between this
 //widget and the inherited widgets associated, so we use Provider which has Change Notifier
 //The other widgets will listen (through a listener), it is very helpful in passing data, instead of using the construtor of the widgets
 
-class Payments with ChangeNotifier {
+class Payments extends ChangeNotifier {
   List<Payment> _payments = [];
   String userId = FirebaseAuth.instance.currentUser.uid;
-  API api = locator<API>();
-
   DateTime dateLocal = DateTime.now();
 
   List<Payment> get itemsPayments {
     return [..._payments];
   }
-
-
 
   Payment findById(String id) {
     return _payments.singleWhere((payment) => payment.id == id);
@@ -89,14 +82,13 @@ class Payments with ChangeNotifier {
       final response = await http.get(url);
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
       final List<Payment> loadedProducts = [];
-      loadedProducts.sort();
       extractedData.forEach((payId, data) {
         loadedProducts.add(Payment(
           id: payId,
           namePayment: data['name_payment'],
           amount: data['amount'],
           nSubscriptions: data['nSubscriptions'],
-          date: data['date'],
+          date: DateTime.parse(data['date']),
           autoPaid: data['autopaid'],
         ));
       });
@@ -106,6 +98,8 @@ class Payments with ChangeNotifier {
       throw (error);
     }
   }
+
+
 
   Future<void> addPayment(Payment payment) async {
     const url =
@@ -181,7 +175,7 @@ class Payments with ChangeNotifier {
   }
 
   Future<void> fetchPaymentsByUserId() async {
-    final filterString = 'orderBy="date"&equalTo="$dateLocal"';
+
 
     var url =
         'https://paymentreminderapp2-default-rtdb.firebaseio.com/payments.json?orderBy="userId"&equalTo="$userId"';
@@ -212,3 +206,4 @@ class Payments with ChangeNotifier {
     }
   }
 }
+

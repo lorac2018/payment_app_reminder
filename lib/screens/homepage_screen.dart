@@ -5,6 +5,7 @@ import '../screens/payments_screen.dart';
 import '../widgets/drawer.dart';
 import 'package:provider/provider.dart';
 import '../screens/search_screen.dart';
+import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
   static const routeName = '/homepage';
