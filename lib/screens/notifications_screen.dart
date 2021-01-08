@@ -13,7 +13,6 @@ class ManageNotifications extends StatefulWidget {
 }
 
 class _ManageNotificationsState extends State<ManageNotifications> {
-
   @override
   void initState() {
     // TODO: implement initState
@@ -37,7 +36,7 @@ class _ManageNotificationsState extends State<ManageNotifications> {
   Widget build(BuildContext context) {
     final paymentId =
         ModalRoute.of(context).settings.arguments as String; //the id
-    final payments = Provider.of<Payments>(context).findById(paymentId);
+    final payments = Provider.of<Payments>(context, listen: false).findById(paymentId);
 
     return Scaffold(
       appBar: AppBar(
@@ -100,7 +99,7 @@ class _ManageNotificationsState extends State<ManageNotifications> {
                     fontWeight: FontWeight.bold,
                     color: Theme.of(context).backgroundColor)),
             leading: Icon(Icons.notifications_active),
-            subtitle: Text('Remind Me Two Days Before',
+            subtitle: Text('Remind Me 2 Days Before Payment',
                 textAlign: TextAlign.left,
                 style: TextStyle(
                     fontSize: 15,
@@ -108,7 +107,44 @@ class _ManageNotificationsState extends State<ManageNotifications> {
                     color: Theme.of(context).primaryColor)),
             onTap: () async {
               await localNotifyManager.showNotificationCloseDateSubscription(
-                  payments.namePayment, payments.amount.toString(), payments.date);
+                  payments.namePayment,
+                  payments.amount.toString(),
+                  payments.date);
+            },
+          ),
+          Container(height: 10),
+          ListTile(
+            title: Text('Custom Notification',
+                textAlign: TextAlign.justify,
+                style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).backgroundColor)),
+            leading: Icon(Icons.notifications_active),
+            subtitle: Text('Remind Me 5 Days Before Payment',
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).primaryColor)),
+            onTap: () async {
+              await localNotifyManager.showNotificationCloseDateSubscription5Days(
+                  payments.namePayment,
+                  payments.amount.toString(),
+                  payments.date);
+            },
+          ),
+          Container(height: 10),
+          ListTile(
+            title: Text('Exit',
+                textAlign: TextAlign.justify,
+                style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).backgroundColor)),
+            leading: Icon(Icons.exit_to_app),
+            onTap: () async {
+              Navigator.pop(context);
             },
           ),
         ],

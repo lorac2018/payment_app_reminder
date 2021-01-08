@@ -22,7 +22,9 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
       setState(() {
         _isLoading = false;
       });
-      Provider.of<Payments>(context).fetchPaymentsByUserId().then((_) {
+      Provider.of<Payments>(context, listen: false)
+          .fetchPaymentsByUserId()
+          .then((_) {
         setState(() {
           _isLoading = true;
         });
@@ -43,9 +45,7 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
         shrinkWrap: true,
         itemCount: payments.length,
         itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
-          value: payments[i],
-          child: PaymentsItem()
-        ),
+            value: payments[i], child: PaymentsItem()),
       ),
     );
   }

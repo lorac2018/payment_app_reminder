@@ -18,8 +18,14 @@ class Payments extends ChangeNotifier {
     return [..._payments];
   }
 
+  /*Payment findById(String id) {
+    return _payments.firstWhere((payment) => payment.id == id);
+  }*/
+
   Payment findById(String id) {
-    return _payments.singleWhere((payment) => payment.id == id);
+    if(_payments != null && _payments.length > 0) {
+      return _payments.firstWhere((payment) => payment.id == id);
+    }
   }
 
 //Função que calcula quanto já gastou naquela subscrição
@@ -27,7 +33,9 @@ class Payments extends ChangeNotifier {
     var paymentId = findById(fetchedId);
 
     if (paymentId.autoPaid == true) {
-      return paymentId.amount * paymentId.nSubscriptions;
+      print(paymentId.nSubscriptions);
+
+      return paymentId.amount * nSubscriptions(paymentId.id);
     } else
       return paymentId.amount;
   }
@@ -36,15 +44,13 @@ class Payments extends ChangeNotifier {
   int nSubscriptions(String fetchedId) {
     var paymentId = findById(fetchedId);
 
-    DateTime nextMonth = paymentId.date.add(Duration(days: 30));
-    DateTime date = paymentId.date;
-
-    //If data > 30 dias, conta a subscrição
-    if (date.isAfter(nextMonth) && nextMonth.isAfter(DateTime.now())) {
-      paymentId.nSubscriptions = paymentId.nSubscriptions + 1;
+    Duration difference = DateTime.now().difference(paymentId.date);
+    if (difference.inDays <= 30) {
+      return paymentId.nSubscriptions;
+    } else {
+      paymentId.nSubscriptions = paymentId.nSubscriptions;
+      return paymentId.nSubscriptions;
     }
-    return paymentId.nSubscriptions;
-    return 0;
   }
 
 //Função que calcula quanto já gastou, no total.
@@ -58,20 +64,18 @@ class Payments extends ChangeNotifier {
 
 //Função que calcula o que falta pagar de todas as subscrições associadas ao id daquele pagamento
   double leftToPayAmount(Payment payment) {
-    //30 dias
-    DateTime nextMonth = payment.date.add(Duration(days: 30));
-    DateTime date = payment.date;
+    Duration difference = DateTime.now().difference(payment.date);
 
     if (payment.autoPaid == true) {
-      if (date.isBefore(nextMonth) && date.isBefore(DateTime.now())) {
-        //Ainda nao fez os 30 dias
+      if (difference.inDays <= 30) {
+        //É uma subscricao, mas ainda nao fez os 30 dias de renewal
         return payment.amount;
       } else {
-        //já fez os 30 dias
+        //30 Days are up.
         return 0.0;
       }
-    }
-    return 0.0;
+    } else
+      return 0.0;
   }
 
   /*Fetch all info about the payments from the (firebase) database*/
@@ -99,8 +103,6 @@ class Payments extends ChangeNotifier {
     }
   }
 
-
-
   Future<void> addPayment(Payment payment) async {
     const url =
         'https://paymentreminderapp2-default-rtdb.firebaseio.com/payments.json';
@@ -111,7 +113,7 @@ class Payments extends ChangeNotifier {
         body: json.encode({
           'name_payment': payment.namePayment,
           'amount': payment.amount,
-          'nSubscriptions': 1,
+          'nSubscriptions': payment.nSubscriptions,
           'date': payment.date.toIso8601String(),
           'autopaid': payment.autoPaid,
           'userId': FirebaseAuth.instance.currentUser.uid,
@@ -157,17 +159,17 @@ class Payments extends ChangeNotifier {
   Future<void> deletePayments(String id) async {
     final url =
         'https://paymentreminderapp2-default-rtdb.firebaseio.com/payments/$id.json';
-    final existingProductIndex = _payments.indexWhere((prod) => prod.id == id);
-    var existingProduct = _payments[existingProductIndex];
-    _payments.removeAt(existingProductIndex);
+    final existingPaymentIndex =_payments.indexWhere((payment) => payment.id == id);
+    var existingPayment = _payments[existingPaymentIndex];
+    _payments.removeAt(existingPaymentIndex);
     notifyListeners();
     final response = await http.delete(url);
     if (response.statusCode >= 400) {
-      _payments.insert(existingProductIndex, existingProduct);
+      _payments.insert(existingPaymentIndex, existingPayment);
       notifyListeners();
       throw HttpException('Could not delete product.');
     }
-    existingProduct = null;
+    existingPayment = null;
   }
 
   int get itemCount {
@@ -175,8 +177,6 @@ class Payments extends ChangeNotifier {
   }
 
   Future<void> fetchPaymentsByUserId() async {
-
-
     var url =
         'https://paymentreminderapp2-default-rtdb.firebaseio.com/payments.json?orderBy="userId"&equalTo="$userId"';
     try {
@@ -197,7 +197,7 @@ class Payments extends ChangeNotifier {
           date: DateTime.parse(data['date']),
           autoPaid: data['autopaid'],
         ));
-        loadedProducts.sort((data, data1) => data.date.compareTo(data1.date));
+        loadedProducts.sort((data, data1) => data1.date.compareTo(data.date));
       });
       _payments = loadedProducts;
       notifyListeners();
@@ -206,4 +206,3 @@ class Payments extends ChangeNotifier {
     }
   }
 }
-

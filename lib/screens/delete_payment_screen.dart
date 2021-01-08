@@ -11,7 +11,9 @@ class DeletePaymentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final paymentId =
         ModalRoute.of(context).settings.arguments as String; //the id
-    final payments = Provider.of<Payments>(context).findById(paymentId);
+    print(paymentId);
+
+    var payment = Provider.of<Payments>(context, listen: false);
 
     return RichAlertDialog(
       alertTitle: Text("Delete Payment?",
@@ -40,8 +42,7 @@ class DeletePaymentScreen extends StatelessWidget {
               textAlign: TextAlign.justify),
           onPressed: () async {
             try {
-              Provider.of<Payments>(context, listen: false)
-                  .deletePayments(payments.id);
+              await payment.deletePayments(paymentId);
               Navigator.of(context).pushNamed(HomePage.routeName);
             } catch (error) {
               print(error);
@@ -57,8 +58,13 @@ class DeletePaymentScreen extends StatelessWidget {
                 color: Theme.of(context).accentColor,
               ),
               textAlign: TextAlign.justify),
-          onPressed: () {
-            Navigator.of(context).pop(false);
+          onPressed: () async {
+            try {
+              payment.deletePayments(paymentId);
+              Navigator.of(context).pop(false);
+            } catch (error) {
+              print('Deleting failed');
+            }
           },
         ),
       ],

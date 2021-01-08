@@ -76,7 +76,7 @@ class _ChartScreenState extends State<ChartScreen> {
           if (!userSnapshot.hasData) {
             return LinearProgressIndicator();
           } else {
-            var payment = Provider.of<Payments>(context);
+            var payment = Provider.of<Payments>(context, listen: false);
             print(payment);
 
             return _buildChart(context, payment.itemsPayments);

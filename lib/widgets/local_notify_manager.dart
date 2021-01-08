@@ -170,12 +170,12 @@ class LocalNotifyManager {
     );
   }
 
-  Future<void> showNotificationCloseDateSubscription(
-      String title, String body, DateTime date) async {
-    int twoDaysBefore = DateTime.now().day - date.day;
+  Future<void> showNotificationCloseDateSubscription(String title, String body, DateTime date) async {
 
-    if (twoDaysBefore <= 2) {
-      var time = Time(14, 03, 0);
+    Duration difference = DateTime.now().difference(date);
+
+    if (difference.inDays <= 2) {
+      var time = Time(12, 33, 0);
       var androidChannel = AndroidNotificationDetails(
         'CHANNEL_ID',
         'CHANNEL_NAME',
@@ -184,6 +184,18 @@ class LocalNotifyManager {
         priority: Priority.High,
         playSound: true,
       );
+
+      var iosChannel = IOSNotificationDetails();
+      var platformChannel = NotificationDetails(androidChannel, iosChannel);
+      await flutterLocalNotificationsPlugin.showDailyAtTime(
+        0,
+        'Daily Reminder about $title',
+        'You will be charged $body soon',
+        time,
+        platformChannel,
+        payload: 'New payload',
+      );
+
       /*final scheduledNotificationDateTime =
       DateTime(date.year, date.month, date.day, 2);
       var androidChannel = AndroidNotificationDetails(
@@ -205,6 +217,33 @@ class LocalNotifyManager {
         platformChannel,
         payload: 'New payload',
       );*/
+    }
+  }
+  Future<void> showNotificationCloseDateSubscription5Days(String title, String body, DateTime date) async {
+
+    Duration difference = DateTime.now().difference(date);
+
+    if (difference.inDays <= 5) {
+      var time = Time(15,0, 0);
+      var androidChannel = AndroidNotificationDetails(
+        'CHANNEL_ID',
+        'CHANNEL_NAME',
+        'CHANNEL_DESCRIPTION',
+        importance: Importance.Max,
+        priority: Priority.High,
+        playSound: true,
+      );
+
+      var iosChannel = IOSNotificationDetails();
+      var platformChannel = NotificationDetails(androidChannel, iosChannel);
+      await flutterLocalNotificationsPlugin.showDailyAtTime(
+        0,
+        'Daily Reminder about $title',
+        'You will be charged $body soon',
+        time,
+        platformChannel,
+        payload: 'New payload',
+      );
     }
   }
 

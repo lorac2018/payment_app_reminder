@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 import '../screens/notifications_screen.dart';
 import 'package:intl/intl.dart';
 import '../screens/recipt_screen.dart';
-
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class PaymentDetailScreen extends StatelessWidget {
   static const routeName = '/payment-detail';
@@ -18,8 +18,9 @@ class PaymentDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final paymentId =
         ModalRoute.of(context).settings.arguments as String; //the id
-    final payments = Provider.of<Payments>(context).findById(paymentId);
-    final payment = Provider.of<Payments>(context);
+    final payments =
+        Provider.of<Payments>(context, listen: false).findById(paymentId);
+    final payment = Provider.of<Payments>(context, listen: false);
 
     String formattedDate = DateFormat('yyyy-MM-dd').format(payments.date);
 
@@ -71,7 +72,7 @@ class PaymentDetailScreen extends StatelessWidget {
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
                               color: Theme.of(context).backgroundColor,
-                            )))
+                            ))),
                   ])),
           Divider(
             thickness: 0.5,
@@ -121,6 +122,25 @@ class PaymentDetailScreen extends StatelessWidget {
                       payments.autoPaid = position;
                     })),
             Container(height: 5),
+            ListTile(
+              leading: Icon(Icons.adjust),
+              title: Text('Count of Subscription',
+                  style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).primaryColor)),
+              trailing: Text(
+                  //if subscription == true then shows the value of the subscription if not shows only the total amount of the payment
+                  payments.autoPaid == true
+                      ? payment.nSubscriptions(payments.id).toString()
+                      : '0',
+                  textAlign: TextAlign.end,
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).backgroundColor,
+                  )),
+            ),
             Divider(thickness: 1),
             Card(
                 child: ListTile(
@@ -138,8 +158,7 @@ class PaymentDetailScreen extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       color: Theme.of(context).backgroundColor)),
               onTap: () {
-                Navigator.of(context).pushNamed(
-                    ReciptScreen.routeName);
+                Navigator.of(context).pushNamed(ReciptScreen.routeName);
               },
             )),
             Divider(thickness: 1),
@@ -171,7 +190,7 @@ class PaymentDetailScreen extends StatelessWidget {
                       trailing: Icon(
                         Icons.cancel_schedule_send_outlined,
                       ),
-                      title: Text('Cancel Notification',
+                      title: Text('Cancel Notifications',
                           textAlign: TextAlign.right,
                           style: TextStyle(
                               fontSize: 15,
@@ -193,48 +212,46 @@ class PaymentDetailScreen extends StatelessWidget {
                       color: Theme.of(context).backgroundColor)),
             ),
             Card(
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                  ButtonBar(children: [
-                    Text('Edit Payment',
-                        textAlign: TextAlign.justify,
-                        style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).primaryColor)),
-                    IconButton(
-                      icon: Icon(
-                        Icons.edit,
-                        color: Colors.grey,
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).pushNamed(
-                          EditPaymentScreen.routeName,
-                          arguments: paymentId,
-                        );
-                      },
-                    ),
-                  ]),
-                  ButtonBar(
-                    children: [
-                      Text('Delete Payment',
-                          textAlign: TextAlign.start,
-                          style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context).primaryColor)),
-                      IconButton(
-                        icon: Icon(Icons.delete, color: Colors.grey),
-                        onPressed: () {
-                          Navigator.of(context).pushNamed(
-                              DeletePaymentScreen.routeName,
-                              arguments: payments.id);
-                        },
-                      ),
-                    ],
+                child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+              ButtonBar(children: [
+                Text('Edit Payment',
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).primaryColor)),
+                IconButton(
+                  icon: Icon(
+                    Icons.edit,
+                    color: Colors.grey,
                   ),
-                ]))
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(
+                      EditPaymentScreen.routeName,
+                      arguments: paymentId,
+                    );
+                  },
+                ),
+              ]),
+              ButtonBar(
+                children: [
+                  Text('Delete Payment',
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).primaryColor)),
+                  IconButton(
+                    icon: Icon(Icons.delete, color: Colors.grey),
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(
+                          DeletePaymentScreen.routeName,
+                          arguments: payments.id);
+                    },
+                  ),
+                ],
+              ),
+            ]))
           ])
         ]));
   }

@@ -7,13 +7,13 @@ import 'package:provider/provider.dart';
 import './screens/add_payment_screen.dart';
 import './screens/edit_payment_screen.dart';
 import './screens/payment_detail_screen.dart';
-import './screens/subscription_screen.dart';
 import 'screens/delete_payment_screen.dart';
 import 'models/payments.dart';
 import 'screens/tabs_screen.dart';
 import 'screens/homepage_screen.dart';
 import 'screens/graph_screen.dart';
 import 'screens/cancel_notification_screen.dart';
+import 'screens/recipt_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -55,13 +55,13 @@ class MyApp extends StatelessWidget {
         routes: {
           HomePage.routeName: (ctx) => HomePage(),
           PaymentDetailScreen.routeName: (ctx) => PaymentDetailScreen(),
-          SubscriptionScreen.routeName: (ctx) => SubscriptionScreen(),
           NewPaymentScreen.routeName: (ctx) => NewPaymentScreen(),
           ManageNotifications.routeName: (ctx) => ManageNotifications(),
           EditPaymentScreen.routeName: (ctx) => EditPaymentScreen(),
           DeletePaymentScreen.routeName: (ctx) => DeletePaymentScreen(),
           ChartScreen.routeName: (ctx) => ChartScreen(),
           CancelNotification.routeName: (ctx) => CancelNotification(),
+          ReciptScreen.routeName: (ctx) => ReciptScreen(),
         },
       ),
     );
